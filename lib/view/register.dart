@@ -1,4 +1,5 @@
 import 'package:drill_app/api/api.dart';
+import 'package:drill_app/constant/router.dart';
 import 'package:drill_app/model/user.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -22,8 +23,10 @@ class _RegisterState extends State<Register> {
     switch (field) {
       case CreateUserReqField.username:
         _createUserReq.username = input;
+        break;
       case CreateUserReqField.password:
         _createUserReq.password = input;
+        break;
     }
   }
 
@@ -35,7 +38,7 @@ class _RegisterState extends State<Register> {
       if (createUserResp?.data?.token != null) {
         await _secureStorage.write(key: constant.token, value: createUserResp?.data?.token);
         if (mounted) {
-          Navigator.pushReplacementNamed(context, '/landing');
+          Navigator.pushReplacementNamed(context, landing);
         }
       }
     }
