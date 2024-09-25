@@ -14,7 +14,7 @@ class _PersonalState extends State<Personal> {
   Widget build(BuildContext context) {
     return const BottomBar(
       title: "Personal",
-      selectedIndex: BottomBarIndex.home,
+      selectedIndex: BottomBarIndex.personal,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
