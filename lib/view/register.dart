@@ -47,7 +47,6 @@ class _RegisterState extends State<Register> {
         SizedBox(
           width: 250,
           child: TextField(
-            obscureText: true,
             decoration: const InputDecoration(
               border: OutlineInputBorder(),
               labelText: 'Username',
