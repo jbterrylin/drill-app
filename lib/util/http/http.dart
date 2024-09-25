@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:drill_app/constant/constant.dart';
+import 'package:drill_app/constant/constant.dart' as constant;
 
 class HttpService {
   final String baseUrl;
@@ -12,7 +12,7 @@ class HttpService {
 
   // 拦截器：在请求前进行处理（例如添加认证 token 等）
   Future<Map<String, String>> _addInterceptors() async {
-    String? token = await _secureStorage.read(key: Token);
+    String? token = await _secureStorage.read(key: constant.token);
 
     return {
       'Content-Type': 'application/json',
@@ -22,12 +22,14 @@ class HttpService {
 
   Future<Map<String, dynamic>> get(String endpoint) async {
     final headers = await _addInterceptors();
-    final response = await http.get(Uri.parse('$baseUrl$endpoint'), headers: headers);
+    final response =
+        await http.get(Uri.parse('$baseUrl$endpoint'), headers: headers);
 
     return _handleResponse(response);
   }
 
-  Future<Map<String, dynamic>> post(String endpoint, Map<String, dynamic> data) async {
+  Future<Map<String, dynamic>> post(
+      String endpoint, Map<String, dynamic> data) async {
     final headers = await _addInterceptors();
     final response = await http.post(
       Uri.parse('$baseUrl$endpoint'),
