@@ -1,3 +1,5 @@
+import 'package:drill_app/constant/constant.dart' as constant;
+import 'package:drill_app/constant/router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
@@ -18,17 +20,17 @@ class _LandingState extends State<Landing> {
   }
 
   Future<void> init() async {
-    String? token = await _secureStorage.read(key: 'token');
+    String? token = await _secureStorage.read(key: constant.token);
     
     // 检查 State 是否仍然 mounted
     if (!mounted) return;
     
     if (token == null) {
       // 如果没有 token，跳转到登录页面
-      Navigator.pushReplacementNamed(context, '/login');
+      Navigator.pushReplacementNamed(context, login);
     } else {
       // 如果有 token，跳转到首页
-      Navigator.pushReplacementNamed(context, '/home');
+      Navigator.pushReplacementNamed(context, home);
     }
   }
 
