@@ -33,6 +33,7 @@ class _RegisterState extends State<Register> {
   void _createUserFunc() async {
     CreateUserResp? createUserResp = await api.userApi.createUser(_createUserReq).catchError((err) {
       log.severe('api.userApi.createUser: $err');
+      return null;
     });
     if (createUserResp?.base?.code == 0) {
       if (createUserResp?.data?.token != null) {
