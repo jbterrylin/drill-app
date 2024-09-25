@@ -1,5 +1,5 @@
 import 'package:drill_app/constant/theme_data.dart';
-import 'package:drill_app/view/my_home_page.dart';
+import 'package:drill_app/view/landing.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Drill',
       theme: MyThemeData().getThemeData(),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const Landing(),
     );
   }
 }
