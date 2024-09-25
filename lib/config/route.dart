@@ -1,27 +1,33 @@
+import 'package:drill_app/constant/router.dart';
 import 'package:drill_app/view/home.dart';
 import 'package:drill_app/view/landing.dart';
 import 'package:drill_app/view/login.dart';
+import 'package:drill_app/view/personal.dart';
 import 'package:drill_app/view/register.dart';
 import 'package:flutter/material.dart';
 
 class RouteConfig {
   MaterialPageRoute getRoute(RouteSettings routeSettings) {
     switch (routeSettings.name) {
-      case "/":
+      case landing:
         return MaterialPageRoute(
           builder: (context) => const Landing(),
         );
-      case "/register":
+      case register:
         return MaterialPageRoute(
           builder: (context) => const Register(),
         );
-      case "/login":
+      case login:
         return MaterialPageRoute(
           builder: (context) => const Login(),
         );
-      case "/home":
+      case home:
         return MaterialPageRoute(
           builder: (context) => const Home(),
+        );
+      case personal:
+        return MaterialPageRoute(
+          builder: (context) => const Personal(),
         );
     }
 
