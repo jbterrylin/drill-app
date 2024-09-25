@@ -1,4 +1,5 @@
 import 'package:drill_app/api/api.dart';
+import 'package:drill_app/constant/router.dart';
 import 'package:drill_app/model/user.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -22,8 +23,10 @@ class _LoginState extends State<Login> {
     switch (field) {
       case LoginReqField.username:
         _loginReq.username = input;
+        break;
       case LoginReqField.password:
         _loginReq.password = input;
+        break;
     }
   }
 
@@ -36,7 +39,7 @@ class _LoginState extends State<Login> {
       if (loginResp?.data?.token != null) {
         await _secureStorage.write(key: constant.token, value: loginResp?.data?.token);
         if (mounted) {
-          Navigator.pushReplacementNamed(context, '/landing');
+          Navigator.pushReplacementNamed(context, landing);
         }
       }
     }
@@ -94,7 +97,7 @@ class _LoginState extends State<Login> {
             ),
             TextButton(
               onPressed: () {
-                Navigator.pushReplacementNamed(context, '/register');
+                Navigator.pushReplacementNamed(context, register);
               },
               child: const Text("Sign up"),
             ),
