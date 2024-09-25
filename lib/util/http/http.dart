@@ -42,15 +42,9 @@ class HttpService {
 
   Map<String, dynamic> _handleResponse(http.Response response) {
     if (response.statusCode == 200) {
-      final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
-
-      if (jsonResponse['code'] != 0) {
-        throw Exception('Error: ${jsonResponse['msg'] ?? "Unknown error"}');
-      }
-
-      return jsonResponse;
+      return jsonDecode(response.body);
     } else {
-      throw Exception('Failed with status code: ${response.statusCode}');
+      throw Exception('Request ${response.request?.url.toString()} fail');
     }
   }
 }
