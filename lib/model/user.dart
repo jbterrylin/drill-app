@@ -1,5 +1,3 @@
-
-
 enum BaseField {
   code,
   msg,
@@ -17,8 +15,8 @@ class Base {
   // 从 JSON 构造 Base 对象
   factory Base.fromJson(Map<String, dynamic> json) {
     return Base(
-        code: json['code'],
-        msg: json['msg'],
+      code: json['code'],
+      msg: json['msg'],
     );
   }
 
@@ -30,7 +28,6 @@ class Base {
     };
   }
 }
-
 
 enum BaseListReqField {
   noPagination,
@@ -58,11 +55,11 @@ class BaseListReq {
   // 从 JSON 构造 BaseListReq 对象
   factory BaseListReq.fromJson(Map<String, dynamic> json) {
     return BaseListReq(
-        noPagination: json['no_pagination'],
-        page: json['page'],
-        pageSize: json['page_size'],
-        orderBy: json['order_by'],
-        sort: json['sort'],
+      noPagination: json['no_pagination'],
+      page: json['page'],
+      pageSize: json['page_size'],
+      orderBy: json['order_by'],
+      sort: json['sort'],
     );
   }
 
@@ -77,7 +74,6 @@ class BaseListReq {
     };
   }
 }
-
 
 enum CreateUserReqField {
   username,
@@ -96,8 +92,8 @@ class CreateUserReq {
   // 从 JSON 构造 CreateUserReq 对象
   factory CreateUserReq.fromJson(Map<String, dynamic> json) {
     return CreateUserReq(
-        username: json['username'],
-        password: json['password'],
+      username: json['username'],
+      password: json['password'],
     );
   }
 
@@ -110,7 +106,6 @@ class CreateUserReq {
   }
 }
 
-
 enum CreateUserRespField {
   base,
   data,
@@ -122,14 +117,14 @@ class CreateUserResp {
 
   CreateUserResp({
     this.base,
-    required this.data,
+    this.data,
   });
 
   // 从 JSON 构造 CreateUserResp 对象
   factory CreateUserResp.fromJson(Map<String, dynamic> json) {
     return CreateUserResp(
-        base: Base.fromJson(json),
-        data: json['data'],
+      base: Base.fromJson(json),
+      data: Token?.fromJson(json['data']),
     );
   }
 
@@ -137,11 +132,10 @@ class CreateUserResp {
   Map<String, dynamic> toJson() {
     return {
       ...base?.toJson() ?? {},
-      'data': data,
+      'data': data?.toJson(),
     };
   }
 }
-
 
 enum LoginReqField {
   username,
@@ -160,8 +154,8 @@ class LoginReq {
   // 从 JSON 构造 LoginReq 对象
   factory LoginReq.fromJson(Map<String, dynamic> json) {
     return LoginReq(
-        username: json['username'],
-        password: json['password'],
+      username: json['username'],
+      password: json['password'],
     );
   }
 
@@ -174,7 +168,6 @@ class LoginReq {
   }
 }
 
-
 enum LoginRespField {
   base,
   data,
@@ -186,14 +179,14 @@ class LoginResp {
 
   LoginResp({
     this.base,
-    required this.data,
+    this.data,
   });
 
   // 从 JSON 构造 LoginResp 对象
   factory LoginResp.fromJson(Map<String, dynamic> json) {
     return LoginResp(
-        base: Base.fromJson(json),
-        data: json['data'],
+      base: Base.fromJson(json),
+      data: Token?.fromJson(json['data']),
     );
   }
 
@@ -201,11 +194,10 @@ class LoginResp {
   Map<String, dynamic> toJson() {
     return {
       ...base?.toJson() ?? {},
-      'data': data,
+      'data': data?.toJson(),
     };
   }
 }
-
 
 enum OnlyIdField {
   base,
@@ -224,8 +216,8 @@ class OnlyId {
   // 从 JSON 构造 OnlyId 对象
   factory OnlyId.fromJson(Map<String, dynamic> json) {
     return OnlyId(
-        base: Base.fromJson(json),
-        id: json['id'],
+      base: Base.fromJson(json),
+      id: json['id'],
     );
   }
 
@@ -237,7 +229,6 @@ class OnlyId {
     };
   }
 }
-
 
 enum TokenField {
   token,
@@ -256,8 +247,8 @@ class Token {
   // 从 JSON 构造 Token 对象
   factory Token.fromJson(Map<String, dynamic> json) {
     return Token(
-        token: json['token'],
-        expired: json['expired'],
+      token: json['token'],
+      expired: json['expired'],
     );
   }
 
@@ -269,7 +260,6 @@ class Token {
     };
   }
 }
-
 
 enum UserField {
   id,
@@ -300,12 +290,12 @@ class User {
   // 从 JSON 构造 User 对象
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
-        id: json['id'],
-        createdAt: json['created_at'],
-        updatedAt: json['updated_at'],
-        username: json['username'],
-        password: json['password'],
-        transId: json['trans_id'],
+      id: json['id'],
+      createdAt: json['created_at'],
+      updatedAt: json['updated_at'],
+      username: json['username'],
+      password: json['password'],
+      transId: json['trans_id'],
     );
   }
 
@@ -322,7 +312,6 @@ class User {
   }
 }
 
-
 enum UserRespField {
   base,
   data,
@@ -334,14 +323,14 @@ class UserResp {
 
   UserResp({
     this.base,
-    required this.data,
+    this.data,
   });
 
   // 从 JSON 构造 UserResp 对象
   factory UserResp.fromJson(Map<String, dynamic> json) {
     return UserResp(
-        base: Base.fromJson(json),
-        data: json['data'],
+      base: Base.fromJson(json),
+      data: User?.fromJson(json['data']),
     );
   }
 
@@ -349,7 +338,7 @@ class UserResp {
   Map<String, dynamic> toJson() {
     return {
       ...base?.toJson() ?? {},
-      'data': data,
+      'data': data?.toJson(),
     };
   }
 }
