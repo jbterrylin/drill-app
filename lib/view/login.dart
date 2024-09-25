@@ -48,7 +48,6 @@ class _LoginState extends State<Login> {
         SizedBox(
           width: 250,
           child: TextField(
-            obscureText: true,
             decoration: const InputDecoration(
               border: OutlineInputBorder(),
               labelText: 'Username',
