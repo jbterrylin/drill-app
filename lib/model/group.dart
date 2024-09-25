@@ -1,4 +1,3 @@
-
 class Base {
   final int code;
   final String msg;
@@ -11,8 +10,8 @@ class Base {
   // 从 JSON 构造 Base 对象
   factory Base.fromJson(Map<String, dynamic> json) {
     return Base(
-        code: json['code'],
-        msg: json['msg'],
+      code: json['code'],
+      msg: json['msg'],
     );
   }
 
@@ -43,11 +42,11 @@ class BaseListReq {
   // 从 JSON 构造 BaseListReq 对象
   factory BaseListReq.fromJson(Map<String, dynamic> json) {
     return BaseListReq(
-        noPagination: json['no_pagination'],
-        page: json['page'],
-        pageSize: json['page_size'],
-        orderBy: json['order_by'],
-        sort: json['sort'],
+      noPagination: json['no_pagination'],
+      page: json['page'],
+      pageSize: json['page_size'],
+      orderBy: json['order_by'],
+      sort: json['sort'],
     );
   }
 
@@ -75,8 +74,8 @@ class CreateGroupInviteReq {
   // 从 JSON 构造 CreateGroupInviteReq 对象
   factory CreateGroupInviteReq.fromJson(Map<String, dynamic> json) {
     return CreateGroupInviteReq(
-        inviteUserId: json['invite_user_id'],
-        groupId: json['group_id'],
+      inviteUserId: json['invite_user_id'],
+      groupId: json['group_id'],
     );
   }
 
@@ -99,7 +98,7 @@ class CreateGroupReq {
   // 从 JSON 构造 CreateGroupReq 对象
   factory CreateGroupReq.fromJson(Map<String, dynamic> json) {
     return CreateGroupReq(
-        name: json['name'],
+      name: json['name'],
     );
   }
 
@@ -121,7 +120,7 @@ class GetGroupInviteListReq {
   // 从 JSON 构造 GetGroupInviteListReq 对象
   factory GetGroupInviteListReq.fromJson(Map<String, dynamic> json) {
     return GetGroupInviteListReq(
-        baseListReq: BaseListReq.fromJson(json),
+      baseListReq: BaseListReq.fromJson(json),
     );
   }
 
@@ -134,29 +133,29 @@ class GetGroupInviteListReq {
 }
 
 class GetGroupInviteListRespData {
-    final List<GroupInvite> data;
-    final int total;
+  final List<GroupInvite> data;
+  final int total;
 
-    GetGroupInviteListRespData({
-        required this.data,
-        required this.total,
-    });
+  GetGroupInviteListRespData({
+    required this.data,
+    required this.total,
+  });
 
-    // 从 JSON 构造 GetGroupInviteListRespData 对象
-    factory GetGroupInviteListRespData.fromJson(Map<String, dynamic> json) {
-        return GetGroupInviteListRespData(
-        data: json['data'],
-        total: json['total'],
-        );
-    }
+  // 从 JSON 构造 GetGroupInviteListRespData 对象
+  factory GetGroupInviteListRespData.fromJson(Map<String, dynamic> json) {
+    return GetGroupInviteListRespData(
+      data: json['data'],
+      total: json['total'],
+    );
+  }
 
-    // 将 GetGroupInviteListRespData 对象转换为 JSON
-    Map<String, dynamic> toJson() {
-        return {
-        'data': data,
-        'total': total,
-        };
-    }
+  // 将 GetGroupInviteListRespData 对象转换为 JSON
+  Map<String, dynamic> toJson() {
+    return {
+      'data': data,
+      'total': total,
+    };
+  }
 }
 
 class GetGroupInviteListResp {
@@ -171,8 +170,8 @@ class GetGroupInviteListResp {
   // 从 JSON 构造 GetGroupInviteListResp 对象
   factory GetGroupInviteListResp.fromJson(Map<String, dynamic> json) {
     return GetGroupInviteListResp(
-        base: Base.fromJson(json),
-        data: GetGroupInviteListRespData.fromJson(json['data']),
+      base: Base.fromJson(json),
+      data: GetGroupInviteListRespData.fromJson(json['data']),
     );
   }
 
@@ -197,8 +196,8 @@ class GetGroupUserListReq {
   // 从 JSON 构造 GetGroupUserListReq 对象
   factory GetGroupUserListReq.fromJson(Map<String, dynamic> json) {
     return GetGroupUserListReq(
-        baseListReq: BaseListReq.fromJson(json),
-        groupId: json['group_id'],
+      baseListReq: BaseListReq.fromJson(json),
+      groupId: json['group_id'],
     );
   }
 
@@ -212,29 +211,29 @@ class GetGroupUserListReq {
 }
 
 class GetGroupUserListRespData {
-    final List<GroupUser> data;
-    final int total;
+  final List<GroupUser> data;
+  final int total;
 
-    GetGroupUserListRespData({
-        required this.data,
-        required this.total,
-    });
+  GetGroupUserListRespData({
+    required this.data,
+    required this.total,
+  });
 
-    // 从 JSON 构造 GetGroupUserListRespData 对象
-    factory GetGroupUserListRespData.fromJson(Map<String, dynamic> json) {
-        return GetGroupUserListRespData(
-        data: json['data'],
-        total: json['total'],
-        );
-    }
+  // 从 JSON 构造 GetGroupUserListRespData 对象
+  factory GetGroupUserListRespData.fromJson(Map<String, dynamic> json) {
+    return GetGroupUserListRespData(
+      data: json['data'],
+      total: json['total'],
+    );
+  }
 
-    // 将 GetGroupUserListRespData 对象转换为 JSON
-    Map<String, dynamic> toJson() {
-        return {
-        'data': data,
-        'total': total,
-        };
-    }
+  // 将 GetGroupUserListRespData 对象转换为 JSON
+  Map<String, dynamic> toJson() {
+    return {
+      'data': data,
+      'total': total,
+    };
+  }
 }
 
 class GetGroupUserListResp {
@@ -249,8 +248,8 @@ class GetGroupUserListResp {
   // 从 JSON 构造 GetGroupUserListResp 对象
   factory GetGroupUserListResp.fromJson(Map<String, dynamic> json) {
     return GetGroupUserListResp(
-        base: Base.fromJson(json),
-        data: GetGroupUserListRespData.fromJson(json['data']),
+      base: Base.fromJson(json),
+      data: GetGroupUserListRespData.fromJson(json['data']),
     );
   }
 
@@ -287,14 +286,14 @@ class Group {
   // 从 JSON 构造 Group 对象
   factory Group.fromJson(Map<String, dynamic> json) {
     return Group(
-        id: json['id'],
-        createdAt: json['created_at'],
-        updatedAt: json['updated_at'],
-        ownerId: json['owner_id'],
-        isActive: json['is_active'],
-        name: json['name'],
-        transId: json['trans_id'],
-        groupUsers: json['group_users'],
+      id: json['id'],
+      createdAt: json['created_at'],
+      updatedAt: json['updated_at'],
+      ownerId: json['owner_id'],
+      isActive: json['is_active'],
+      name: json['name'],
+      transId: json['trans_id'],
+      groupUsers: json['group_users'],
     );
   }
 
@@ -339,15 +338,15 @@ class GroupInvite {
   // 从 JSON 构造 GroupInvite 对象
   factory GroupInvite.fromJson(Map<String, dynamic> json) {
     return GroupInvite(
-        id: json['id'],
-        createdAt: json['created_at'],
-        updatedAt: json['updated_at'],
-        invitedBy: json['invited_by'],
-        inviteUserId: json['invite_user_id'],
-        status: json['status'],
-        transId: json['trans_id'],
-        groupId: json['group_id'],
-        group: json['group'],
+      id: json['id'],
+      createdAt: json['created_at'],
+      updatedAt: json['updated_at'],
+      invitedBy: json['invited_by'],
+      inviteUserId: json['invite_user_id'],
+      status: json['status'],
+      transId: json['trans_id'],
+      groupId: json['group_id'],
+      group: json['group'],
     );
   }
 
@@ -393,15 +392,15 @@ class GroupUser {
   // 从 JSON 构造 GroupUser 对象
   factory GroupUser.fromJson(Map<String, dynamic> json) {
     return GroupUser(
-        id: json['id'],
-        createdAt: json['created_at'],
-        updatedAt: json['updated_at'],
-        isActive: json['is_active'],
-        groupId: json['group_id'],
-        userId: json['user_id'],
-        transId: json['trans_id'],
-        group: json['group'],
-        user: json['user'],
+      id: json['id'],
+      createdAt: json['created_at'],
+      updatedAt: json['updated_at'],
+      isActive: json['is_active'],
+      groupId: json['group_id'],
+      userId: json['user_id'],
+      transId: json['trans_id'],
+      group: json['group'],
+      user: json['user'],
     );
   }
 
@@ -433,8 +432,8 @@ class OnlyId {
   // 从 JSON 构造 OnlyId 对象
   factory OnlyId.fromJson(Map<String, dynamic> json) {
     return OnlyId(
-        base: Base.fromJson(json),
-        id: json['id'],
+      base: Base.fromJson(json),
+      id: json['id'],
     );
   }
 
@@ -459,8 +458,8 @@ class UpdateGroupInviteStatusReq {
   // 从 JSON 构造 UpdateGroupInviteStatusReq 对象
   factory UpdateGroupInviteStatusReq.fromJson(Map<String, dynamic> json) {
     return UpdateGroupInviteStatusReq(
-        groupId: json['group_id'],
-        status: json['status'],
+      groupId: json['group_id'],
+      status: json['status'],
     );
   }
 
@@ -493,12 +492,12 @@ class User {
   // 从 JSON 构造 User 对象
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
-        id: json['id'],
-        createdAt: json['created_at'],
-        updatedAt: json['updated_at'],
-        username: json['username'],
-        password: json['password'],
-        transId: json['trans_id'],
+      id: json['id'],
+      createdAt: json['created_at'],
+      updatedAt: json['updated_at'],
+      username: json['username'],
+      password: json['password'],
+      transId: json['trans_id'],
     );
   }
 
