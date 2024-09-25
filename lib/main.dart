@@ -1,4 +1,5 @@
-import 'package:drill_app/constant/theme_data.dart';
+import 'package:drill_app/config/route.dart';
+import 'package:drill_app/config/theme.dart';
 import 'package:drill_app/view/landing.dart';
 import 'package:flutter/material.dart';
 
@@ -14,8 +15,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Drill',
-      theme: MyThemeData().getThemeData(),
+      theme: ThemeConfig().getTheme(),
       home: const Landing(),
+      onGenerateRoute: (setting) => RouteConfig().getRoute(setting),
     );
   }
 }
