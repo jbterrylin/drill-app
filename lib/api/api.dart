@@ -9,7 +9,7 @@ class Api {
   }
 
   void init() async {
-    userApi = UserApi(httpService: HttpService(baseUrl: 'localhost:3000'));
+    userApi = UserApi(httpService: HttpService(baseUrl: 'http://10.0.2.2:3000'));
   }
 }
 
