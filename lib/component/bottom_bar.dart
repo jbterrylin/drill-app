@@ -6,6 +6,7 @@ enum BottomBarIndex {
   home,
   myDrill,
   personal,
+  tokenManager,
 }
 
 class BottomBar extends StatefulWidget {
@@ -37,6 +38,8 @@ class _BottomBarState extends State<BottomBar> {
         break;
       case BottomBarIndex.personal:
         Navigator.pushReplacementNamed(context, personal);
+      case BottomBarIndex.tokenManager:
+        Navigator.pushReplacementNamed(context, tokenManager);
         break;
     }
   }
@@ -62,6 +65,10 @@ class _BottomBarState extends State<BottomBar> {
           BottomNavigationBarItem(
             icon: Icon(Icons.school),
             label: 'Personal',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.school),
+            label: 'Token',
           ),
         ],
         currentIndex: widget.selectedIndex.index,
