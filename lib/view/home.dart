@@ -1,6 +1,7 @@
 import 'package:drill_app/api/api.dart';
 import 'package:drill_app/component/bottom_bar.dart';
 import 'package:drill_app/model/group.dart';
+import 'package:drill_app/util/secure_storage/secure_storage.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
@@ -23,7 +24,7 @@ class _HomeState extends State<Home> {
 
   void getGroupListFunc() async {
     GetGroupListReq getGroupListReq =
-        GetGroupListReq(baseListReq: BaseListReq(page: 1, pageSize: 10));
+        GetGroupListReq(baseListReq: BaseListReq(page: 1, pageSize: 10), noHaveUserId: await getUserId() ?? 0);
     GetGroupListResp? getGroupListResp =
         await api.groupApi.getGroupList(getGroupListReq);
     if (getGroupListResp?.base?.code == 0) {
@@ -31,6 +32,15 @@ class _HomeState extends State<Home> {
       setState(() {
         _groups;
       });
+    }
+  }
+
+  void createGroupInviteFunc(Group group) async {
+    CreateGroupInviteReq createGroupInviteReq = CreateGroupInviteReq(inviteUserId: await getUserId() ?? 0, groupId: group.id);
+    OnlyId? createGroupInviteResp =
+        await api.groupApi.createGroupInvite(createGroupInviteReq);
+    if (createGroupInviteResp?.base?.code == 0) {
+      getGroupListFunc();
     }
   }
 
