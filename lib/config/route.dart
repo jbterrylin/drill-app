@@ -2,6 +2,7 @@ import 'package:drill_app/constant/router.dart';
 import 'package:drill_app/view/home.dart';
 import 'package:drill_app/view/landing.dart';
 import 'package:drill_app/view/login.dart';
+import 'package:drill_app/view/my_drill.dart';
 import 'package:drill_app/view/personal.dart';
 import 'package:drill_app/view/register.dart';
 import 'package:flutter/material.dart';
@@ -28,6 +29,10 @@ class RouteConfig {
       case personal:
         return MaterialPageRoute(
           builder: (context) => const Personal(),
+        );
+      case myDrill:
+        return MaterialPageRoute(
+          builder: (context) => const MyDrill(),
         );
     }
 
