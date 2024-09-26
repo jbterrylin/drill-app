@@ -5,6 +5,7 @@ import 'package:drill_app/view/login.dart';
 import 'package:drill_app/view/my_drill.dart';
 import 'package:drill_app/view/personal.dart';
 import 'package:drill_app/view/register.dart';
+import 'package:drill_app/view/token_manager.dart';
 import 'package:flutter/material.dart';
 
 class RouteConfig {
@@ -33,6 +34,10 @@ class RouteConfig {
       case myDrill:
         return MaterialPageRoute(
           builder: (context) => const MyDrill(),
+        );
+      case tokenManager:
+        return MaterialPageRoute(
+          builder: (context) => const TokenManager(),
         );
     }
 
