@@ -4,7 +4,7 @@ import 'package:logging/logging.dart';
 
 enum BottomBarIndex {
   home,
-  business,
+  myDrill,
   personal,
 }
 
@@ -32,8 +32,8 @@ class _BottomBarState extends State<BottomBar> {
       case BottomBarIndex.home:
         Navigator.pushReplacementNamed(context, home);
         break;
-      case BottomBarIndex.business:
-        Navigator.pushReplacementNamed(context, home);
+      case BottomBarIndex.myDrill:
+        Navigator.pushReplacementNamed(context, myDrill);
         break;
       case BottomBarIndex.personal:
         Navigator.pushReplacementNamed(context, personal);
