@@ -28,6 +28,9 @@ class _HomeState extends State<Home> {
         await api.groupApi.getGroupList(getGroupListReq);
     if (getGroupListResp?.base?.code == 0) {
       _groups = getGroupListResp?.data.data ?? [];
+      setState(() {
+        _groups;
+      });
     }
   }
 
@@ -39,25 +42,18 @@ class _HomeState extends State<Home> {
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
-                      const ListTile(
-                        leading: Icon(Icons.album),
-                        title: Text('The Enchanted Nightingale'),
-                        subtitle: Text(
-                            'Music by Julie Gable. Lyrics by Sidney Stein.'),
+                      ListTile(
+                        leading: const Icon(Icons.album),
+                        title: Text(v.name ?? ""),
+                        subtitle: Text(v.ownerId?.toString() ?? ""),
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: <Widget>[
                           TextButton(
-                            child: const Text('BUY TICKETS'),
+                            child: const Text('Join'),
                             onPressed: () {/* ... */},
                           ),
-                          const SizedBox(width: 8),
-                          TextButton(
-                            child: const Text('LISTEN'),
-                            onPressed: () {/* ... */},
-                          ),
-                          const SizedBox(width: 8),
                         ],
                       ),
                     ],
