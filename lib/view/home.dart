@@ -1,3 +1,6 @@
+import 'package:drill_app/api/api.dart';
+import 'package:drill_app/component/bottom_bar.dart';
+import 'package:drill_app/model/group.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
@@ -8,54 +11,76 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  int _counter = 0;
+  List<Group> _groups = [];
 
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
+  _HomeState() {
+    init();
   }
 
-  Widget loginForm() {
-    return const Column(
-      children: <Widget>[
-        Text(
-          'You have pushed the button this many times:',
-        ),
-        Text(
-          'You have pushed the button this many times:',
-        )
-      ],
+  void init() async {
+    getGroupListFunc();
+  }
+
+  void getGroupListFunc() async {
+    GetGroupListReq getGroupListReq =
+        GetGroupListReq(baseListReq: BaseListReq(page: 1, pageSize: 10));
+    GetGroupListResp? getGroupListResp =
+        await api.groupApi.getGroupList(getGroupListReq);
+    if (getGroupListResp?.base?.code == 0) {
+      _groups = getGroupListResp?.data.data ?? [];
+    }
+  }
+
+  Widget _groupCards() {
+    return Column(
+      children: _groups
+          .map((v) => {
+                Card(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      const ListTile(
+                        leading: Icon(Icons.album),
+                        title: Text('The Enchanted Nightingale'),
+                        subtitle: Text(
+                            'Music by Julie Gable. Lyrics by Sidney Stein.'),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: <Widget>[
+                          TextButton(
+                            child: const Text('BUY TICKETS'),
+                            onPressed: () {/* ... */},
+                          ),
+                          const SizedBox(width: 8),
+                          TextButton(
+                            child: const Text('LISTEN'),
+                            onPressed: () {/* ... */},
+                          ),
+                          const SizedBox(width: 8),
+                        ],
+                      ),
+                    ],
+                  ),
+                )
+              })
+          .expand((v) => v)
+          .toList(),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: const Text("Home"),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            loginForm(),
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
-    );
+    return BottomBar(
+        title: "Home",
+        selectedIndex: BottomBarIndex.home,
+        body: Center(
+          child: Column(
+            children: <Widget>[
+              const Text("Group near you"),
+              _groupCards(),
+            ],
+          ),
+        ));
   }
 }
