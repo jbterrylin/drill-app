@@ -222,19 +222,27 @@ class GetGroupInviteListResp {
 
 enum GetGroupListReqField {
   baseListReq,
+  haveUserId,
+  noHaveUserId,
 }
 
 class GetGroupListReq {
   BaseListReq? baseListReq;
+  int? haveUserId;
+  int? noHaveUserId;
 
   GetGroupListReq({
     this.baseListReq,
+    this.haveUserId,
+    this.noHaveUserId,
   });
 
   // 从 JSON 构造 GetGroupListReq 对象
   factory GetGroupListReq.fromJson(Map<String, dynamic> json) {
     return GetGroupListReq(
       baseListReq: BaseListReq.fromJson(json),
+      haveUserId: json['have_user_id'],
+      noHaveUserId: json['no_have_user_id'],
     );
   }
 
@@ -242,6 +250,8 @@ class GetGroupListReq {
   Map<String, dynamic> toJson() {
     return {
       ...baseListReq?.toJson() ?? {},
+      'have_user_id': haveUserId,
+      'no_have_user_id': noHaveUserId,
     };
   }
 }
