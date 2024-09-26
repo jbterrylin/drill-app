@@ -1,6 +1,11 @@
+enum BaseField {
+  code,
+  msg,
+}
+
 class Base {
-  final int code;
-  final String msg;
+  int code;
+  String msg;
 
   Base({
     required this.code,
@@ -24,12 +29,20 @@ class Base {
   }
 }
 
+enum BaseListReqField {
+  noPagination,
+  page,
+  pageSize,
+  orderBy,
+  sort,
+}
+
 class BaseListReq {
-  final bool? noPagination;
-  final int? page;
-  final int? pageSize;
-  final List<String>? orderBy;
-  final List<String>? sort;
+  bool? noPagination;
+  int? page;
+  int? pageSize;
+  List<String>? orderBy;
+  List<String>? sort;
 
   BaseListReq({
     this.noPagination,
@@ -62,9 +75,14 @@ class BaseListReq {
   }
 }
 
+enum CreateGroupInviteReqField {
+  inviteUserId,
+  groupId,
+}
+
 class CreateGroupInviteReq {
-  final int? inviteUserId;
-  final int? groupId;
+  int? inviteUserId;
+  int? groupId;
 
   CreateGroupInviteReq({
     this.inviteUserId,
@@ -88,8 +106,12 @@ class CreateGroupInviteReq {
   }
 }
 
+enum CreateGroupReqField {
+  name,
+}
+
 class CreateGroupReq {
-  final String? name;
+  String? name;
 
   CreateGroupReq({
     this.name,
@@ -110,8 +132,12 @@ class CreateGroupReq {
   }
 }
 
+enum GetGroupInviteListReqField {
+  baseListReq,
+}
+
 class GetGroupInviteListReq {
-  final BaseListReq? baseListReq;
+  BaseListReq? baseListReq;
 
   GetGroupInviteListReq({
     this.baseListReq,
@@ -132,9 +158,14 @@ class GetGroupInviteListReq {
   }
 }
 
+enum GetGroupInviteListRespDataField {
+  data,
+  total,
+}
+
 class GetGroupInviteListRespData {
-  final List<GroupInvite> data;
-  final int total;
+  List<GroupInvite> data;
+  int total;
 
   GetGroupInviteListRespData({
     required this.data,
@@ -144,7 +175,7 @@ class GetGroupInviteListRespData {
   // 从 JSON 构造 GetGroupInviteListRespData 对象
   factory GetGroupInviteListRespData.fromJson(Map<String, dynamic> json) {
     return GetGroupInviteListRespData(
-      data: json['data'],
+      data: (json['data'] as List).map((v) => GroupInvite.fromJson(v)).toList(),
       total: json['total'],
     );
   }
@@ -152,15 +183,20 @@ class GetGroupInviteListRespData {
   // 将 GetGroupInviteListRespData 对象转换为 JSON
   Map<String, dynamic> toJson() {
     return {
-      'data': data,
+      'data': data.map((v) => v.toJson()),
       'total': total,
     };
   }
 }
 
+enum GetGroupInviteListRespField {
+  base,
+  data,
+}
+
 class GetGroupInviteListResp {
-  final Base? base;
-  final GetGroupInviteListRespData data;
+  Base? base;
+  GetGroupInviteListRespData data;
 
   GetGroupInviteListResp({
     this.base,
@@ -184,9 +220,102 @@ class GetGroupInviteListResp {
   }
 }
 
+enum GetGroupListReqField {
+  baseListReq,
+}
+
+class GetGroupListReq {
+  BaseListReq? baseListReq;
+
+  GetGroupListReq({
+    this.baseListReq,
+  });
+
+  // 从 JSON 构造 GetGroupListReq 对象
+  factory GetGroupListReq.fromJson(Map<String, dynamic> json) {
+    return GetGroupListReq(
+      baseListReq: BaseListReq.fromJson(json),
+    );
+  }
+
+  // 将 GetGroupListReq 对象转换为 JSON
+  Map<String, dynamic> toJson() {
+    return {
+      ...baseListReq?.toJson() ?? {},
+    };
+  }
+}
+
+enum GetGroupListRespDataField {
+  data,
+  total,
+}
+
+class GetGroupListRespData {
+  List<Group> data;
+  int total;
+
+  GetGroupListRespData({
+    required this.data,
+    required this.total,
+  });
+
+  // 从 JSON 构造 GetGroupListRespData 对象
+  factory GetGroupListRespData.fromJson(Map<String, dynamic> json) {
+    return GetGroupListRespData(
+      data: (json['data'] as List).map((v) => Group.fromJson(v)).toList(),
+      total: json['total'],
+    );
+  }
+
+  // 将 GetGroupListRespData 对象转换为 JSON
+  Map<String, dynamic> toJson() {
+    return {
+      'data': data.map((v) => v.toJson()),
+      'total': total,
+    };
+  }
+}
+
+enum GetGroupListRespField {
+  base,
+  data,
+}
+
+class GetGroupListResp {
+  Base? base;
+  GetGroupListRespData data;
+
+  GetGroupListResp({
+    this.base,
+    required this.data,
+  });
+
+  // 从 JSON 构造 GetGroupListResp 对象
+  factory GetGroupListResp.fromJson(Map<String, dynamic> json) {
+    return GetGroupListResp(
+      base: Base.fromJson(json),
+      data: GetGroupListRespData.fromJson(json['data']),
+    );
+  }
+
+  // 将 GetGroupListResp 对象转换为 JSON
+  Map<String, dynamic> toJson() {
+    return {
+      ...base?.toJson() ?? {},
+      'data': data.toJson(),
+    };
+  }
+}
+
+enum GetGroupUserListReqField {
+  baseListReq,
+  groupId,
+}
+
 class GetGroupUserListReq {
-  final BaseListReq? baseListReq;
-  final int? groupId;
+  BaseListReq? baseListReq;
+  int? groupId;
 
   GetGroupUserListReq({
     this.baseListReq,
@@ -210,9 +339,14 @@ class GetGroupUserListReq {
   }
 }
 
+enum GetGroupUserListRespDataField {
+  data,
+  total,
+}
+
 class GetGroupUserListRespData {
-  final List<GroupUser> data;
-  final int total;
+  List<GroupUser> data;
+  int total;
 
   GetGroupUserListRespData({
     required this.data,
@@ -222,7 +356,7 @@ class GetGroupUserListRespData {
   // 从 JSON 构造 GetGroupUserListRespData 对象
   factory GetGroupUserListRespData.fromJson(Map<String, dynamic> json) {
     return GetGroupUserListRespData(
-      data: json['data'],
+      data: (json['data'] as List).map((v) => GroupUser.fromJson(v)).toList(),
       total: json['total'],
     );
   }
@@ -230,15 +364,20 @@ class GetGroupUserListRespData {
   // 将 GetGroupUserListRespData 对象转换为 JSON
   Map<String, dynamic> toJson() {
     return {
-      'data': data,
+      'data': data.map((v) => v.toJson()),
       'total': total,
     };
   }
 }
 
+enum GetGroupUserListRespField {
+  base,
+  data,
+}
+
 class GetGroupUserListResp {
-  final Base? base;
-  final GetGroupUserListRespData data;
+  Base? base;
+  GetGroupUserListRespData data;
 
   GetGroupUserListResp({
     this.base,
@@ -262,15 +401,26 @@ class GetGroupUserListResp {
   }
 }
 
+enum GroupField {
+  id,
+  createdAt,
+  updatedAt,
+  ownerId,
+  isActive,
+  name,
+  transId,
+  groupUsers,
+}
+
 class Group {
-  final int? id;
-  final String? createdAt;
-  final String? updatedAt;
-  final int? ownerId;
-  final int? isActive;
-  final String? name;
-  final String? transId;
-  final List<GroupUser>? groupUsers;
+  int? id;
+  String? createdAt;
+  String? updatedAt;
+  int? ownerId;
+  int? isActive;
+  String? name;
+  String? transId;
+  List<GroupUser>? groupUsers;
 
   Group({
     this.id,
@@ -293,7 +443,11 @@ class Group {
       isActive: json['is_active'],
       name: json['name'],
       transId: json['trans_id'],
-      groupUsers: json['group_users'],
+      groupUsers: json['group_users'] != null
+          ? (json['group_users'] as List)
+              .map((v) => GroupUser.fromJson(v))
+              .toList()
+          : null,
     );
   }
 
@@ -307,21 +461,33 @@ class Group {
       'is_active': isActive,
       'name': name,
       'trans_id': transId,
-      'group_users': groupUsers,
+      'group_users': groupUsers?.map((v) => v.toJson()),
     };
   }
 }
 
+enum GroupInviteField {
+  id,
+  createdAt,
+  updatedAt,
+  invitedBy,
+  inviteUserId,
+  status,
+  transId,
+  groupId,
+  group,
+}
+
 class GroupInvite {
-  final int? id;
-  final String? createdAt;
-  final String? updatedAt;
-  final int? invitedBy;
-  final int? inviteUserId;
-  final int? status;
-  final String? transId;
-  final int? groupId;
-  final Group? group;
+  int? id;
+  String? createdAt;
+  String? updatedAt;
+  int? invitedBy;
+  int? inviteUserId;
+  int? status;
+  String? transId;
+  int? groupId;
+  Group? group;
 
   GroupInvite({
     this.id,
@@ -346,7 +512,7 @@ class GroupInvite {
       status: json['status'],
       transId: json['trans_id'],
       groupId: json['group_id'],
-      group: json['group'],
+      group: json['group'] != null ? Group?.fromJson(json['group']) : null,
     );
   }
 
@@ -361,21 +527,33 @@ class GroupInvite {
       'status': status,
       'trans_id': transId,
       'group_id': groupId,
-      'group': group,
+      'group': group?.toJson(),
     };
   }
 }
 
+enum GroupUserField {
+  id,
+  createdAt,
+  updatedAt,
+  isActive,
+  groupId,
+  userId,
+  transId,
+  group,
+  user,
+}
+
 class GroupUser {
-  final int? id;
-  final String? createdAt;
-  final String? updatedAt;
-  final int? isActive;
-  final int? groupId;
-  final int? userId;
-  final String? transId;
-  final Group? group;
-  final User? user;
+  int? id;
+  String? createdAt;
+  String? updatedAt;
+  int? isActive;
+  int? groupId;
+  int? userId;
+  String? transId;
+  Group? group;
+  User? user;
 
   GroupUser({
     this.id,
@@ -399,8 +577,8 @@ class GroupUser {
       groupId: json['group_id'],
       userId: json['user_id'],
       transId: json['trans_id'],
-      group: json['group'],
-      user: json['user'],
+      group: json['group'] != null ? Group?.fromJson(json['group']) : null,
+      user: json['user'] != null ? User?.fromJson(json['user']) : null,
     );
   }
 
@@ -414,15 +592,20 @@ class GroupUser {
       'group_id': groupId,
       'user_id': userId,
       'trans_id': transId,
-      'group': group,
-      'user': user,
+      'group': group?.toJson(),
+      'user': user?.toJson(),
     };
   }
 }
 
+enum OnlyIdField {
+  base,
+  id,
+}
+
 class OnlyId {
-  final Base? base;
-  final int id;
+  Base? base;
+  int id;
 
   OnlyId({
     this.base,
@@ -446,9 +629,14 @@ class OnlyId {
   }
 }
 
+enum UpdateGroupInviteStatusReqField {
+  groupId,
+  status,
+}
+
 class UpdateGroupInviteStatusReq {
-  final int? groupId;
-  final int? status;
+  int? groupId;
+  int? status;
 
   UpdateGroupInviteStatusReq({
     this.groupId,
@@ -472,13 +660,22 @@ class UpdateGroupInviteStatusReq {
   }
 }
 
+enum UserField {
+  id,
+  createdAt,
+  updatedAt,
+  username,
+  password,
+  transId,
+}
+
 class User {
-  final int? id;
-  final String? createdAt;
-  final String? updatedAt;
-  final String? username;
-  final String? password;
-  final String? transId;
+  int? id;
+  String? createdAt;
+  String? updatedAt;
+  String? username;
+  String? password;
+  String? transId;
 
   User({
     this.id,
