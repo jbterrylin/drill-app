@@ -2,11 +2,14 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:drill_app/constant/constant.dart' as constant;
+import 'package:logging/logging.dart';
 
 class HttpService {
   final String baseUrl;
 
   final FlutterSecureStorage _secureStorage = const FlutterSecureStorage();
+
+  final log = Logger('HttpService');
 
   HttpService({required this.baseUrl});
 
@@ -41,6 +44,7 @@ class HttpService {
   }
 
   Map<String, dynamic> _handleResponse(http.Response response) {
+    log.severe('${response.request?.url.toString()} (${response.statusCode}): ${response.body}');
     if (response.statusCode == 200) {
       return jsonDecode(response.body);
     } else {
