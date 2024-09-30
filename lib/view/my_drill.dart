@@ -69,12 +69,12 @@ class _MyDrillState extends State<MyDrill> {
   @override
   Widget build(BuildContext context) {
     return BottomBar(
-        title: "Home",
-        selectedIndex: BottomBarIndex.home,
+        title: "My Drill",
+        selectedIndex: BottomBarIndex.myDrill,
         body: Center(
           child: Column(
             children: <Widget>[
-              const Text("Group near you"),
+              const Text("My Group"),
               _groupCards(),
             ],
           ),
