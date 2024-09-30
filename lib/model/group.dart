@@ -175,7 +175,9 @@ class GetGroupInviteListRespData {
   // 从 JSON 构造 GetGroupInviteListRespData 对象
   factory GetGroupInviteListRespData.fromJson(Map<String, dynamic> json) {
     return GetGroupInviteListRespData(
-      data: (json['data'] as List).map((v) => GroupInvite.fromJson(v)).toList(),
+      data: json['data'] != null
+          ? (json['data'] as List).map((v) => GroupInvite.fromJson(v)).toList()
+          : [],
       total: json['total'],
     );
   }
@@ -273,7 +275,9 @@ class GetGroupListRespData {
   // 从 JSON 构造 GetGroupListRespData 对象
   factory GetGroupListRespData.fromJson(Map<String, dynamic> json) {
     return GetGroupListRespData(
-      data: (json['data'] as List).map((v) => Group.fromJson(v)).toList(),
+      data: json['data'] != null
+          ? (json['data'] as List).map((v) => Group.fromJson(v)).toList()
+          : [],
       total: json['total'],
     );
   }
@@ -366,7 +370,9 @@ class GetGroupUserListRespData {
   // 从 JSON 构造 GetGroupUserListRespData 对象
   factory GetGroupUserListRespData.fromJson(Map<String, dynamic> json) {
     return GetGroupUserListRespData(
-      data: (json['data'] as List).map((v) => GroupUser.fromJson(v)).toList(),
+      data: json['data'] != null
+          ? (json['data'] as List).map((v) => GroupUser.fromJson(v)).toList()
+          : [],
       total: json['total'],
     );
   }
