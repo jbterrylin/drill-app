@@ -1,3 +1,4 @@
+import 'package:drill_app/component/bottom_bar.dart';
 import 'package:drill_app/constant/router.dart';
 import 'package:drill_app/view/home.dart';
 import 'package:drill_app/view/landing.dart';
@@ -25,19 +26,23 @@ class RouteConfig {
         );
       case home:
         return MaterialPageRoute(
-          builder: (context) => const Home(),
+          builder: (context) =>
+              const BottomBar(selectedIndex: BottomBarIndex.home),
         );
       case personal:
         return MaterialPageRoute(
-          builder: (context) => const Personal(),
+          builder: (context) =>
+              const BottomBar(selectedIndex: BottomBarIndex.personal),
         );
       case myDrill:
         return MaterialPageRoute(
-          builder: (context) => const MyDrill(),
+          builder: (context) =>
+              const BottomBar(selectedIndex: BottomBarIndex.myDrill),
         );
       case tokenManager:
         return MaterialPageRoute(
-          builder: (context) => const TokenManager(),
+          builder: (context) =>
+              const BottomBar(selectedIndex: BottomBarIndex.tokenManager),
         );
     }
 
