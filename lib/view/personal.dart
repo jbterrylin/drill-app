@@ -14,7 +14,16 @@ class Personal extends StatefulWidget {
 class _PersonalState extends State<Personal> {
   final FlutterSecureStorage _secureStorage = const FlutterSecureStorage();
 
-  void _logout() async {
+  @override
+  void initState() {
+    super.initState();
+    init();
+  }
+
+  Future<void> init() async {
+  }
+
+  Future<void> _logout() async {
     await _secureStorage.delete(key: constant.token);
     if (mounted) {
       Navigator.pushReplacementNamed(context, login);
@@ -35,16 +44,18 @@ class _PersonalState extends State<Personal> {
 
   @override
   Widget build(BuildContext context) {
-    return BottomBar(
-        title: "Personal",
-        selectedIndex: BottomBarIndex.personal,
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              ..._other(),
-            ],
-          ),
-        ));
+    return SingleChildScrollView(
+        child: RefreshIndicator(
+            onRefresh: () async {
+              await init();
+            },
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  ..._other(),
+                ],
+              ),
+            )));
   }
 }
