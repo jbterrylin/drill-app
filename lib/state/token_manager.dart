@@ -60,13 +60,13 @@ class TokenController {
     return [];
   }
 
-  void setToken(List<TokenInfo> tokens) async {
+  Future<void> setToken(List<TokenInfo> tokens) async {
     await _secureStorage.write(
         key: devTokens,
         value: jsonEncode(tokens.map((token) => token.toJson()).toList()));
   }
 
-  void setTokenToCurrent(List<TokenInfo> tokens, int index) async {
+  Future<void> setTokenToCurrent(List<TokenInfo> tokens, int index) async {
     await _secureStorage.write(key: constant.token, value: tokens[index].token);
   }
 }
