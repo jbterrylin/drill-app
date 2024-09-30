@@ -1,12 +1,8 @@
 import 'package:drill_app/component/bottom_bar.dart';
 import 'package:drill_app/constant/router.dart';
-import 'package:drill_app/view/home.dart';
 import 'package:drill_app/view/landing.dart';
 import 'package:drill_app/view/login.dart';
-import 'package:drill_app/view/my_drill.dart';
-import 'package:drill_app/view/personal.dart';
 import 'package:drill_app/view/register.dart';
-import 'package:drill_app/view/token_manager.dart';
 import 'package:flutter/material.dart';
 
 class RouteConfig {
