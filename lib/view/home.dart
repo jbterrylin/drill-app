@@ -14,17 +14,20 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   List<Group> _groups = [];
 
-  _HomeState() {
+  @override
+  void initState() {
+    super.initState();
     init();
   }
 
-  void init() async {
+  Future<void> init() async {
     getGroupListFunc();
   }
 
-  void getGroupListFunc() async {
-    GetGroupListReq getGroupListReq =
-        GetGroupListReq(baseListReq: BaseListReq(page: 1, pageSize: 10), noHaveUserId: await getUserId() ?? 0);
+  Future<void> getGroupListFunc() async {
+    GetGroupListReq getGroupListReq = GetGroupListReq(
+        baseListReq: BaseListReq(page: 1, pageSize: 10),
+        noHaveUserId: await getUserId() ?? 0);
     GetGroupListResp? getGroupListResp =
         await api.groupApi.getGroupList(getGroupListReq);
     if (getGroupListResp?.base?.code == 0) {
@@ -35,8 +38,9 @@ class _HomeState extends State<Home> {
     }
   }
 
-  void createGroupInviteFunc(Group group) async {
-    CreateGroupInviteReq createGroupInviteReq = CreateGroupInviteReq(inviteUserId: await getUserId() ?? 0, groupId: group.id);
+  Future<void> createGroupInviteFunc(Group group) async {
+    CreateGroupInviteReq createGroupInviteReq = CreateGroupInviteReq(
+        inviteUserId: await getUserId() ?? 0, groupId: group.id);
     OnlyId? createGroupInviteResp =
         await api.groupApi.createGroupInvite(createGroupInviteReq);
     if (createGroupInviteResp?.base?.code == 0) {
@@ -77,16 +81,17 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    return BottomBar(
-        title: "Home",
-        selectedIndex: BottomBarIndex.home,
-        body: Center(
-          child: Column(
-            children: <Widget>[
-              const Text("Group near you"),
-              _groupCards(),
-            ],
-          ),
-        ));
+    return SingleChildScrollView(
+        child: RefreshIndicator(
+            onRefresh: () async {
+              await init();
+            },
+            child: Center(
+                child: Column(
+              children: <Widget>[
+                const Text("Group near you"),
+                _groupCards(),
+              ],
+            ))));
   }
 }
