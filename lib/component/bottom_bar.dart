@@ -72,7 +72,8 @@ class _BottomBarState extends State<BottomBar> {
           ),
         ],
         currentIndex: widget.selectedIndex.index,
-        selectedItemColor: Colors.amber[800],
+        selectedItemColor: Theme.of(context).colorScheme.primary,
+        unselectedItemColor: Theme.of(context).colorScheme.inversePrimary,
         onTap: _onItemTapped,
       ),
     );
