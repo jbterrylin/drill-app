@@ -1,8 +1,9 @@
-import 'package:drill_app/component/bottom_bar.dart';
 import 'package:drill_app/constant/router.dart';
+import 'package:drill_app/state/me.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:drill_app/constant/constant.dart' as constant;
+import 'package:get_it/get_it.dart';
 
 class Personal extends StatefulWidget {
   const Personal({super.key});
@@ -20,14 +21,22 @@ class _PersonalState extends State<Personal> {
     init();
   }
 
-  Future<void> init() async {
-  }
+  Future<void> init() async {}
 
   Future<void> _logout() async {
     await _secureStorage.delete(key: constant.token);
     if (mounted) {
       Navigator.pushReplacementNamed(context, login);
     }
+  }
+
+  List<Widget> _meCard() {
+    return [
+      Card(
+          child: ListTile(
+        title: Text(GetIt.I<MeController>().getMe()?.username ?? ""),
+      )),
+    ];
   }
 
   List<Widget> _other() {
@@ -53,6 +62,7 @@ class _PersonalState extends State<Personal> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
+                  ..._meCard(),
                   ..._other(),
                 ],
               ),
