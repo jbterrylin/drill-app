@@ -1,10 +1,10 @@
-import 'package:drill_app/api/api.dart';
-import 'package:drill_app/component/bottom_bar.dart';
 import 'package:drill_app/constant/router.dart';
-import 'package:drill_app/model/group.dart';
 import 'package:drill_app/state/token_manager.dart';
-import 'package:drill_app/util/secure_storage/secure_storage.dart';
+import 'package:drill_app/util/list/safe_delete.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:drill_app/constant/constant.dart' as constant;
+import 'package:flutter/services.dart';
 
 class TokenManager extends StatefulWidget {
   const TokenManager({super.key});
@@ -16,7 +16,22 @@ class TokenManager extends StatefulWidget {
 class _TokenManagerState extends State<TokenManager> {
   TokenController tokenController = TokenController();
 
-  late List<TokenInfo> tokens;
+  final FlutterSecureStorage _secureStorage = const FlutterSecureStorage();
+
+  late List<TokenInfo> tokens = [];
+
+  String? currentToken;
+
+  @override
+  void initState() {
+    super.initState();
+    init();
+  }
+
+  void init() async {
+    await _resetToken();
+    currentToken = await _secureStorage.read(key: constant.token);
+  }
 
   void _updateToken(String input, int index, TokenInfoField field) {
     switch (field) {
@@ -32,20 +47,12 @@ class _TokenManagerState extends State<TokenManager> {
     }
   }
 
-  void _resetToken() async {
+  Future<void> _resetToken() async {
     tokens = await tokenController.getToken();
 
     setState(() {
       tokens;
     });
-  }
-
-  _TokenManagerState() {
-    init();
-  }
-
-  void init() async {
-    tokens = await tokenController.getToken();
   }
 
   Widget _tokenInput() {
@@ -63,7 +70,7 @@ class _TokenManagerState extends State<TokenManager> {
                       child: TextField(
                         decoration: const InputDecoration(
                           border: OutlineInputBorder(),
-                          labelText: 'Username',
+                          labelText: 'Name',
                         ),
                         controller: TextEditingController(text: tokens[i].name),
                         onChanged: (value) =>
@@ -75,7 +82,7 @@ class _TokenManagerState extends State<TokenManager> {
                       child: TextField(
                         decoration: const InputDecoration(
                           border: OutlineInputBorder(),
-                          labelText: 'Username',
+                          labelText: 'UserId',
                         ),
                         controller:
                             TextEditingController(text: tokens[i].userId),
@@ -88,7 +95,7 @@ class _TokenManagerState extends State<TokenManager> {
                       child: TextField(
                         decoration: const InputDecoration(
                           border: OutlineInputBorder(),
-                          labelText: 'Username',
+                          labelText: 'Token',
                         ),
                         controller:
                             TextEditingController(text: tokens[i].token),
@@ -105,6 +112,14 @@ class _TokenManagerState extends State<TokenManager> {
                       },
                       child: const Text("Set to current"),
                     ),
+                    TextButton(
+                      onPressed: () async {
+                        safeDeleteByIndex(tokens, i);
+                        await tokenController.setToken(tokens);
+                        _resetToken();
+                      },
+                      child: const Text("Delete"),
+                    ),
                   ],
                 ),
               )))
@@ -115,28 +130,45 @@ class _TokenManagerState extends State<TokenManager> {
 
   @override
   Widget build(BuildContext context) {
-    return BottomBar(
-        title: "Home",
-        selectedIndex: BottomBarIndex.home,
-        body: Center(
-          child: Column(
-            children: <Widget>[
-              const Text("Group near you"),
-              _tokenInput(),
-              TextButton(
-                onPressed: () {
-                  tokenController.setToken(tokens);
-                },
-                child: const Text("Save"),
-              ),
-              TextButton(
-                onPressed: () {
-                  _resetToken();
-                },
-                child: const Text("Reset"),
-              ),
-            ],
-          ),
-        ));
+    return SingleChildScrollView(
+      child: Center(
+        child: Column(
+          children: <Widget>[
+            _tokenInput(),
+            TextButton(
+              onPressed: () {
+                tokens.add(TokenInfo(name: '', userId: '', token: ''));
+                setState(() {
+                  tokens;
+                });
+              },
+              child: const Text("Add"),
+            ),
+            TextButton(
+              onPressed: () {
+                tokenController.setToken(tokens);
+              },
+              child: const Text("Save"),
+            ),
+            TextButton(
+              onPressed: () {
+                _resetToken();
+              },
+              child: const Text("Reset"),
+            ),
+            TextButton(
+              onPressed: () {
+                Clipboard.setData(ClipboardData(text: currentToken ?? ""));
+                // 显示 SnackBar 提示用户内容已复制
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text("Copied to clipboard!")),
+                );
+              },
+              child: Text('Current Token ${currentToken ?? ""}'),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
