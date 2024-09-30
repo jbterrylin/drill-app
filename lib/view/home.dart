@@ -1,8 +1,8 @@
 import 'package:drill_app/api/api.dart';
-import 'package:drill_app/component/bottom_bar.dart';
 import 'package:drill_app/model/group.dart';
-import 'package:drill_app/util/secure_storage/secure_storage.dart';
+import 'package:drill_app/state/me.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -27,7 +27,7 @@ class _HomeState extends State<Home> {
   Future<void> getGroupListFunc() async {
     GetGroupListReq getGroupListReq = GetGroupListReq(
         baseListReq: BaseListReq(page: 1, pageSize: 10),
-        noHaveUserId: await getUserId() ?? 0);
+        noHaveUserId: GetIt.I<MeController>().getMe()?.id ?? 0);
     GetGroupListResp? getGroupListResp =
         await api.groupApi.getGroupList(getGroupListReq);
     if (getGroupListResp?.base?.code == 0) {
@@ -40,7 +40,8 @@ class _HomeState extends State<Home> {
 
   Future<void> createGroupInviteFunc(Group group) async {
     CreateGroupInviteReq createGroupInviteReq = CreateGroupInviteReq(
-        inviteUserId: await getUserId() ?? 0, groupId: group.id);
+        inviteUserId: GetIt.I<MeController>().getMe()?.id ?? 0,
+        groupId: group.id);
     OnlyId? createGroupInviteResp =
         await api.groupApi.createGroupInvite(createGroupInviteReq);
     if (createGroupInviteResp?.base?.code == 0) {
