@@ -1,4 +1,7 @@
-import 'package:drill_app/constant/router.dart';
+import 'package:drill_app/view/home.dart';
+import 'package:drill_app/view/my_drill.dart';
+import 'package:drill_app/view/personal.dart';
+import 'package:drill_app/view/token_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
 
@@ -9,16 +12,20 @@ enum BottomBarIndex {
   tokenManager,
 }
 
-class BottomBar extends StatefulWidget {
-  const BottomBar(
-      {super.key,
-      required this.title,
-      required this.selectedIndex,
-      required this.body});
+class Page {
+  Widget title;
+  Widget body;
 
-  final String title;
+  Page({
+    required this.title,
+    required this.body,
+  });
+}
+
+class BottomBar extends StatefulWidget {
+  const BottomBar({super.key, required this.selectedIndex});
+
   final BottomBarIndex selectedIndex;
-  final Widget body;
 
   @override
   State<BottomBar> createState() => _BottomBarState();
@@ -27,21 +34,42 @@ class BottomBar extends StatefulWidget {
 class _BottomBarState extends State<BottomBar> {
   final log = Logger('BottomBar');
 
+  late BottomBarIndex selectedTab;
+  late Map<BottomBarIndex, Page> body;
+  
+  @override
+  void initState() {
+    super.initState();
+    selectedTab = widget.selectedIndex;
+    body = {
+      BottomBarIndex.home: Page(
+        title: const Text("Home"),
+        body: const Home(),
+      ),
+      BottomBarIndex.myDrill: Page(
+        title: const Text("MyDrill"),
+        body: const MyDrill(),
+      ),
+      BottomBarIndex.personal: Page(
+        title: const Text("Personal"),
+        body: const Personal(),
+      ),
+      BottomBarIndex.tokenManager: Page(
+        title: const Text("TokenManager"),
+        body: const TokenManager(),
+      ),
+    };
+    init();
+  }
+
+  void init() async {
+  }
+
   void _onItemTapped(int index) {
-    final selectedTab = BottomBarIndex.values[index];
-    switch (selectedTab) {
-      case BottomBarIndex.home:
-        Navigator.pushReplacementNamed(context, home);
-        break;
-      case BottomBarIndex.myDrill:
-        Navigator.pushReplacementNamed(context, myDrill);
-        break;
-      case BottomBarIndex.personal:
-        Navigator.pushReplacementNamed(context, personal);
-      case BottomBarIndex.tokenManager:
-        Navigator.pushReplacementNamed(context, tokenManager);
-        break;
-    }
+    selectedTab = BottomBarIndex.values[index];
+    setState(() {
+      selectedTab;
+    });
   }
 
   @override
@@ -49,9 +77,9 @@ class _BottomBarState extends State<BottomBar> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
+        title: body[BottomBarIndex.values[selectedTab.index]]!.title,
       ),
-      body: widget.body,
+      body: body[BottomBarIndex.values[selectedTab.index]]!.body,
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
@@ -71,7 +99,7 @@ class _BottomBarState extends State<BottomBar> {
             label: 'Token',
           ),
         ],
-        currentIndex: widget.selectedIndex.index,
+        currentIndex: selectedTab.index,
         selectedItemColor: Theme.of(context).colorScheme.primary,
         unselectedItemColor: Theme.of(context).colorScheme.inversePrimary,
         onTap: _onItemTapped,
