@@ -14,17 +14,20 @@ class MyDrill extends StatefulWidget {
 class _MyDrillState extends State<MyDrill> {
   List<Group> _groups = [];
 
-  _MyDrillState() {
+  @override
+  void initState() {
+    super.initState();
     init();
   }
 
-  void init() async {
+  Future<void> init() async {
     getGroupListFunc();
   }
 
-  void getGroupListFunc() async {
-    GetGroupListReq getGroupListReq =
-        GetGroupListReq(baseListReq: BaseListReq(page: 1, pageSize: 10), haveUserId: await getUserId() ?? 0);
+  Future<void> getGroupListFunc() async {
+    GetGroupListReq getGroupListReq = GetGroupListReq(
+        baseListReq: BaseListReq(page: 1, pageSize: 10),
+        haveUserId: await getUserId() ?? 0);
     GetGroupListResp? getGroupListResp =
         await api.groupApi.getGroupList(getGroupListReq);
     if (getGroupListResp?.base?.code == 0) {
@@ -68,16 +71,18 @@ class _MyDrillState extends State<MyDrill> {
 
   @override
   Widget build(BuildContext context) {
-    return BottomBar(
-        title: "My Drill",
-        selectedIndex: BottomBarIndex.myDrill,
-        body: Center(
-          child: Column(
-            children: <Widget>[
-              const Text("My Group"),
-              _groupCards(),
-            ],
-          ),
-        ));
+    return SingleChildScrollView(
+        child: RefreshIndicator(
+            onRefresh: () async {
+              await init();
+            },
+            child: Center(
+              child: Column(
+                children: <Widget>[
+                  const Text("My Group"),
+                  _groupCards(),
+                ],
+              ),
+            )));
   }
 }
