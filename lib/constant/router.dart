@@ -5,3 +5,4 @@ const String home = "/home";
 const String personal = "/personal";
 const String myDrill = "/my_drill";
 const String tokenManager = "/token_manager";
+const String createGroup = "/group/create";
