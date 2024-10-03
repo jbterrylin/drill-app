@@ -1,5 +1,6 @@
 import 'package:drill_app/component/bottom_bar.dart';
 import 'package:drill_app/constant/router.dart';
+import 'package:drill_app/view/create_group.dart';
 import 'package:drill_app/view/landing.dart';
 import 'package:drill_app/view/login.dart';
 import 'package:drill_app/view/register.dart';
@@ -39,6 +40,10 @@ class RouteConfig {
         return MaterialPageRoute(
           builder: (context) =>
               const BottomBar(selectedIndex: BottomBarIndex.tokenManager),
+        );
+      case createGroup:
+        return MaterialPageRoute(
+          builder: (context) => const CreateGroup(),
         );
     }
 
