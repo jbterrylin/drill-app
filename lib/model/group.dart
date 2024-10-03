@@ -224,17 +224,20 @@ class GetGroupInviteListResp {
 
 enum GetGroupListReqField {
   baseListReq,
+  ownerId,
   haveUserId,
   noHaveUserId,
 }
 
 class GetGroupListReq {
   BaseListReq? baseListReq;
+  int? ownerId;
   int? haveUserId;
   int? noHaveUserId;
 
   GetGroupListReq({
     this.baseListReq,
+    this.ownerId,
     this.haveUserId,
     this.noHaveUserId,
   });
@@ -243,6 +246,7 @@ class GetGroupListReq {
   factory GetGroupListReq.fromJson(Map<String, dynamic> json) {
     return GetGroupListReq(
       baseListReq: BaseListReq.fromJson(json),
+      ownerId: json['owner_id'],
       haveUserId: json['have_user_id'],
       noHaveUserId: json['no_have_user_id'],
     );
@@ -252,6 +256,7 @@ class GetGroupListReq {
   Map<String, dynamic> toJson() {
     return {
       ...baseListReq?.toJson() ?? {},
+      'owner_id': ownerId,
       'have_user_id': haveUserId,
       'no_have_user_id': noHaveUserId,
     };
@@ -492,6 +497,8 @@ enum GroupInviteField {
   transId,
   groupId,
   group,
+  inviteUser,
+  invitedByUser,
 }
 
 class GroupInvite {
@@ -504,6 +511,8 @@ class GroupInvite {
   String? transId;
   int? groupId;
   Group? group;
+  User? inviteUser;
+  User? invitedByUser;
 
   GroupInvite({
     this.id,
@@ -515,6 +524,8 @@ class GroupInvite {
     this.transId,
     this.groupId,
     this.group,
+    this.inviteUser,
+    this.invitedByUser,
   });
 
   // 从 JSON 构造 GroupInvite 对象
@@ -529,6 +540,12 @@ class GroupInvite {
       transId: json['trans_id'],
       groupId: json['group_id'],
       group: json['group'] != null ? Group?.fromJson(json['group']) : null,
+      inviteUser: json['invite_user'] != null
+          ? User?.fromJson(json['invite_user'])
+          : null,
+      invitedByUser: json['invited_by_user'] != null
+          ? User?.fromJson(json['invited_by_user'])
+          : null,
     );
   }
 
@@ -544,6 +561,8 @@ class GroupInvite {
       'trans_id': transId,
       'group_id': groupId,
       'group': group?.toJson(),
+      'invite_user': inviteUser?.toJson(),
+      'invited_by_user': invitedByUser?.toJson(),
     };
   }
 }

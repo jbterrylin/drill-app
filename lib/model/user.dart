@@ -124,7 +124,7 @@ class CreateUserResp {
   factory CreateUserResp.fromJson(Map<String, dynamic> json) {
     return CreateUserResp(
       base: Base.fromJson(json),
-      data: Token?.fromJson(json['data']),
+      data: json['data'] != null ? Token?.fromJson(json['data']) : null,
     );
   }
 
@@ -186,7 +186,7 @@ class LoginResp {
   factory LoginResp.fromJson(Map<String, dynamic> json) {
     return LoginResp(
       base: Base.fromJson(json),
-      data: Token?.fromJson(json['data']),
+      data: json['data'] != null ? Token?.fromJson(json['data']) : null,
     );
   }
 
@@ -330,7 +330,7 @@ class UserResp {
   factory UserResp.fromJson(Map<String, dynamic> json) {
     return UserResp(
       base: Base.fromJson(json),
-      data: User?.fromJson(json['data']),
+      data: json['data'] != null ? User?.fromJson(json['data']) : null,
     );
   }
 
