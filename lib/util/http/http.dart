@@ -28,7 +28,7 @@ class HttpService {
     final response =
         await http.get(Uri.parse('$baseUrl$endpoint'), headers: headers);
 
-    return _handleResponse(response);
+    return _handleResponse(response, "");
   }
 
   Future<Map<String, dynamic>> post(
@@ -40,11 +40,11 @@ class HttpService {
       body: jsonEncode(data),
     );
 
-    return _handleResponse(response);
+    return _handleResponse(response, jsonEncode(data));
   }
 
-  Map<String, dynamic> _handleResponse(http.Response response) {
-    log.severe('${response.request?.url.toString()} (${response.statusCode}): ${response.body}');
+  Map<String, dynamic> _handleResponse(http.Response response, String? body) {
+    log.severe('${response.request?.url.toString()} $body (${response.statusCode}): ${response.body}');
     if (response.statusCode == 200) {
       return jsonDecode(response.body);
     } else {
