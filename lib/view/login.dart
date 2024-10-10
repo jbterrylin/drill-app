@@ -6,15 +6,15 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:logging/logging.dart';
 import 'package:drill_app/constant/constant.dart' as constant;
 
-class Login extends StatefulWidget {
-  const Login({super.key});
+class UiLogin extends StatefulWidget {
+  const UiLogin({super.key});
 
   @override
-  State<Login> createState() => _LoginState();
+  State<UiLogin> createState() => _UiLoginState();
 }
 
-class _LoginState extends State<Login> {
-  final log = Logger('Login');
+class _UiLoginState extends State<UiLogin> {
+  final log = Logger('UiLogin');
   final FlutterSecureStorage _secureStorage = const FlutterSecureStorage();
 
   final LoginReq _loginReq = LoginReq();
