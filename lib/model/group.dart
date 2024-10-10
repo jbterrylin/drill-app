@@ -224,6 +224,7 @@ class GetGroupInviteListResp {
 
 enum GetGroupListReqField {
   baseListReq,
+  id,
   ownerId,
   haveUserId,
   noHaveUserId,
@@ -231,12 +232,14 @@ enum GetGroupListReqField {
 
 class GetGroupListReq {
   BaseListReq? baseListReq;
+  int? id;
   int? ownerId;
   int? haveUserId;
   int? noHaveUserId;
 
   GetGroupListReq({
     this.baseListReq,
+    this.id,
     this.ownerId,
     this.haveUserId,
     this.noHaveUserId,
@@ -246,6 +249,7 @@ class GetGroupListReq {
   factory GetGroupListReq.fromJson(Map<String, dynamic> json) {
     return GetGroupListReq(
       baseListReq: BaseListReq.fromJson(json),
+      id: json['id'],
       ownerId: json['owner_id'],
       haveUserId: json['have_user_id'],
       noHaveUserId: json['no_have_user_id'],
@@ -256,6 +260,7 @@ class GetGroupListReq {
   Map<String, dynamic> toJson() {
     return {
       ...baseListReq?.toJson() ?? {},
+      'id': id,
       'owner_id': ownerId,
       'have_user_id': haveUserId,
       'no_have_user_id': noHaveUserId,
