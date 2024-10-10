@@ -1,6 +1,7 @@
 import 'package:drill_app/component/bottom_bar.dart';
 import 'package:drill_app/constant/router.dart';
 import 'package:drill_app/view/create_group.dart';
+import 'package:drill_app/view/group.dart';
 import 'package:drill_app/view/landing.dart';
 import 'package:drill_app/view/login.dart';
 import 'package:drill_app/view/register.dart';
@@ -8,18 +9,22 @@ import 'package:flutter/material.dart';
 
 class RouteConfig {
   MaterialPageRoute getRoute(RouteSettings routeSettings) {
+    Map<String, dynamic>? arguments;
+    if (routeSettings.arguments != null) {
+      arguments = routeSettings.arguments as Map<String, dynamic>;
+    }
     switch (routeSettings.name) {
       case landing:
         return MaterialPageRoute(
-          builder: (context) => const Landing(),
+          builder: (context) => const UiLanding(),
         );
       case register:
         return MaterialPageRoute(
-          builder: (context) => const Register(),
+          builder: (context) => const UiRegister(),
         );
       case login:
         return MaterialPageRoute(
-          builder: (context) => const Login(),
+          builder: (context) => const UiLogin(),
         );
       case home:
         return MaterialPageRoute(
@@ -43,12 +48,17 @@ class RouteConfig {
         );
       case createGroup:
         return MaterialPageRoute(
-          builder: (context) => const CreateGroup(),
+          builder: (context) => const UiCreateGroup(),
+        );
+      case group:
+        return MaterialPageRoute(
+          builder: (context) =>
+              UiGroup(groupId: arguments?[groupInitFieldGroupId] ?? 0),
         );
     }
 
     return MaterialPageRoute(
-      builder: (context) => const Login(),
+      builder: (context) => const UiLogin(),
     );
   }
 }
