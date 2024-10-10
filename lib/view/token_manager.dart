@@ -6,14 +6,14 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:drill_app/constant/constant.dart' as constant;
 import 'package:flutter/services.dart';
 
-class TokenManager extends StatefulWidget {
-  const TokenManager({super.key});
+class UiTokenManager extends StatefulWidget {
+  const UiTokenManager({super.key});
 
   @override
-  State<TokenManager> createState() => _TokenManagerState();
+  State<UiTokenManager> createState() => _UiTokenManagerState();
 }
 
-class _TokenManagerState extends State<TokenManager> {
+class _UiTokenManagerState extends State<UiTokenManager> {
   TokenController tokenController = TokenController();
 
   final FlutterSecureStorage _secureStorage = const FlutterSecureStorage();
