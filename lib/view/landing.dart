@@ -5,14 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
 
-class Landing extends StatefulWidget {
-  const Landing({super.key});
+class UiLanding extends StatefulWidget {
+  const UiLanding({super.key});
 
   @override
-  State<Landing> createState() => _LandingState();
+  State<UiLanding> createState() => _UiLandingState();
 }
 
-class _LandingState extends State<Landing> {
+class _UiLandingState extends State<UiLanding> {
   final FlutterSecureStorage _secureStorage = const FlutterSecureStorage();
 
   @override
