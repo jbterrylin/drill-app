@@ -5,14 +5,14 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:drill_app/constant/constant.dart' as constant;
 import 'package:get_it/get_it.dart';
 
-class Personal extends StatefulWidget {
-  const Personal({super.key});
+class UiPersonal extends StatefulWidget {
+  const UiPersonal({super.key});
 
   @override
-  State<Personal> createState() => _PersonalState();
+  State<UiPersonal> createState() => _UiPersonalState();
 }
 
-class _PersonalState extends State<Personal> {
+class _UiPersonalState extends State<UiPersonal> {
   final FlutterSecureStorage _secureStorage = const FlutterSecureStorage();
 
   @override
