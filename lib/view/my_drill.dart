@@ -1,18 +1,29 @@
 import 'package:drill_app/api/api.dart';
+import 'package:drill_app/constant/router.dart';
 import 'package:drill_app/model/group.dart';
 import 'package:drill_app/state/me.dart';
+import 'package:drill_app/view/group.dart' as groupView;
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:logging/logging.dart';
 
-class MyDrill extends StatefulWidget {
-  const MyDrill({super.key});
+class UiMyDrill extends StatefulWidget {
+  const UiMyDrill({super.key});
 
   @override
-  State<MyDrill> createState() => _MyDrillState();
+  State<UiMyDrill> createState() => _UiMyDrillState();
 }
 
-class _MyDrillState extends State<MyDrill> {
-  List<Group> _groups = [];
+class _UiMyDrillState extends State<UiMyDrill> {
+  final log = Logger('UiMyDrill');
+
+  bool isMyGroupsEnd = false;
+  int _myGroupsPage = 1;
+  final List<Group> _myGroups = [];
+
+  bool isJoinedGroupsEnd = false;
+  int _joinedGroupsPage = 1;
+  final List<Group> _joinedGroups = [];
 
   @override
   void initState() {
@@ -21,26 +32,61 @@ class _MyDrillState extends State<MyDrill> {
   }
 
   Future<void> init() async {
-    getGroupListFunc();
+    _getMyGroup();
+    _getJoinedGroup();
   }
 
-  Future<void> getGroupListFunc() async {
-    GetGroupListReq getGroupListReq = GetGroupListReq(
-        baseListReq: BaseListReq(page: 1, pageSize: 10),
-        haveUserId: GetIt.I<MeController>().getMe()?.id ?? 0);
-    GetGroupListResp? getGroupListResp =
-        await api.groupApi.getGroupList(getGroupListReq);
-    if (getGroupListResp?.base?.code == 0) {
-      _groups = getGroupListResp?.data.data ?? [];
-      setState(() {
-        _groups;
-      });
+  Future<void> _getMyGroup() async {
+    if (isMyGroupsEnd) {
+      return;
     }
+    GetGroupListReq getGroupListReq = GetGroupListReq(
+      baseListReq: BaseListReq(page: _myGroupsPage, pageSize: 10),
+      ownerId: GetIt.I<MeController>().getMe()?.id ?? -1,
+    );
+    final groupList = await _getGroupListFunc(getGroupListReq);
+    _myGroupsPage += 1;
+    if (groupList.isEmpty) {
+      isJoinedGroupsEnd = true;
+    }
+    _myGroups.addAll(groupList);
+    setState(() {
+      _myGroups;
+    });
   }
 
-  Widget _groupCards() {
+  Future<void> _getJoinedGroup() async {
+    if (isJoinedGroupsEnd) {
+      return;
+    }
+    GetGroupListReq getGroupListReq = GetGroupListReq(
+        baseListReq: BaseListReq(page: _joinedGroupsPage, pageSize: 10),
+        haveUserId: GetIt.I<MeController>().getMe()?.id ?? -1);
+    final groupList = await _getGroupListFunc(getGroupListReq);
+    _joinedGroupsPage += 1;
+    if (groupList.isEmpty) {
+      isJoinedGroupsEnd = true;
+    }
+    groupList.removeWhere(
+        (v) => v.ownerId == (GetIt.I<MeController>().getMe()?.id ?? -1));
+    _joinedGroups.addAll(groupList);
+    setState(() {
+      _joinedGroups;
+    });
+  }
+
+  Future<List<Group>> _getGroupListFunc(GetGroupListReq getGroupListReq) async {
+    GetGroupListResp? getGroupListResp =
+        await api.groupApi.getGroupList(getGroupListReq).catchError((err) {
+      log.severe('api.groupApi.getGroupLis: $err');
+      return null;
+    });
+    return getGroupListResp?.data.data ?? [];
+  }
+
+  Widget _groupCards(List<Group> groups) {
     return Column(
-      children: _groups
+      children: groups
           .map((v) => {
                 Card(
                   child: Column(
@@ -56,7 +102,17 @@ class _MyDrillState extends State<MyDrill> {
                         children: <Widget>[
                           TextButton(
                             child: const Text('Watch Detail'),
-                            onPressed: () {/* ... */},
+                            onPressed: () {
+                              if (mounted) {
+                                Navigator.pushReplacementNamed(
+                                  context,
+                                  group,
+                                  arguments: {
+                                    groupView.groupInitFieldGroupId: v.id,
+                                  },
+                                );
+                              }
+                            },
                           ),
                         ],
                       ),
@@ -80,7 +136,17 @@ class _MyDrillState extends State<MyDrill> {
               child: Column(
                 children: <Widget>[
                   const Text("My Group"),
-                  _groupCards(),
+                  TextButton(
+                    onPressed: () {
+                      if (mounted) {
+                        Navigator.pushReplacementNamed(context, createGroup);
+                      }
+                    },
+                    child: const Text("Create My Group"),
+                  ),
+                  _groupCards(_myGroups),
+                  const Text("Joined Group"),
+                  _groupCards(_joinedGroups),
                 ],
               ),
             )));
