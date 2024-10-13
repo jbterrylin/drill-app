@@ -42,14 +42,13 @@ class _UiEventState extends State<UiEvent> {
     _getEventUserListFunc();
   }
 
-   Future<void> _getEventListFunc() async {
+  Future<void> _getEventListFunc() async {
     GetEventListReq getEventListReq = GetEventListReq(
       baseListReq: BaseListReq(page: 1, pageSize: 1),
       id: widget.eventId,
     );
-    GetEventListResp? getEventListResp = await api.eventApi
-        .getEventList(getEventListReq)
-        .catchError((err) {
+    GetEventListResp? getEventListResp =
+        await api.eventApi.getEventList(getEventListReq).catchError((err) {
       log.severe('api.eventApi.getEventList: $err');
       return null;
     });
@@ -60,7 +59,6 @@ class _UiEventState extends State<UiEvent> {
       });
     }
   }
-
 
   Future<void> _getEventUserListFunc() async {
     if (_isEventUserListEnd) {
@@ -110,6 +108,17 @@ class _UiEventState extends State<UiEvent> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        title: const Text("Event"),
+        leading: BackButton(
+          onPressed: () {
+            if (mounted) {
+              Navigator.pop(context);
+            }
+          },
+        ),
+      ),
       body: SingleChildScrollView(
         child: RefreshIndicator(
           onRefresh: () async {
