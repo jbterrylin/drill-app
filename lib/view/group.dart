@@ -93,7 +93,8 @@ class _UiGroupState extends State<UiGroup> {
     }
   }
 
-  Future<void> _updateGroupInviteStatusFunc(GroupInviteStatus status) async {
+  Future<void> _updateGroupInviteStatusFunc(
+      EnumGroupInviteStatus status) async {
     UpdateGroupInviteStatusReq updateGroupInviteStatusReq =
         UpdateGroupInviteStatusReq(
             groupId: widget.groupId, status: status.value);
@@ -137,14 +138,14 @@ class _UiGroupState extends State<UiGroup> {
                             child: const Text('Accept'),
                             onPressed: () {
                               _updateGroupInviteStatusFunc(
-                                  GroupInviteStatus.approve);
+                                  EnumGroupInviteStatus.approve);
                             },
                           ),
                           TextButton(
                             child: const Text('Reject'),
                             onPressed: () {
                               _updateGroupInviteStatusFunc(
-                                  GroupInviteStatus.reject);
+                                  EnumGroupInviteStatus.reject);
                             },
                           ),
                         ],
@@ -201,7 +202,7 @@ class _UiGroupState extends State<UiGroup> {
                             child: const Text('View'),
                             onPressed: () {
                               if (mounted) {
-                                Navigator.pushReplacementNamed(context, event,
+                                Navigator.pushNamed(context, event,
                                     arguments: {
                                       uiEventInitFieldEventId: v.id ?? 0,
                                     });
@@ -222,6 +223,17 @@ class _UiGroupState extends State<UiGroup> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        appBar: AppBar(
+          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+          title: const Text("Group"),
+          leading: BackButton(
+            onPressed: () {
+              if (mounted) {
+                Navigator.pop(context);
+              }
+            },
+          ),
+        ),
         body: SingleChildScrollView(
           child: RefreshIndicator(
             onRefresh: () async {
@@ -243,7 +255,7 @@ class _UiGroupState extends State<UiGroup> {
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             if (mounted) {
-              Navigator.pushReplacementNamed(context, createEvent);
+              Navigator.pushNamed(context, createEvent);
             }
           },
           child: const Icon(Icons.flag_circle),
