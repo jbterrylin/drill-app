@@ -63,6 +63,13 @@ class _UiCreateGroupState extends State<UiCreateGroup> {
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: const Text("Create Group"),
+        leading: BackButton(
+          onPressed: () {
+            if (mounted) {
+              Navigator.pop(context);
+            }
+          },
+        ),
       ),
       body: SingleChildScrollView(
         child: RefreshIndicator(
