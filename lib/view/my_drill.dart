@@ -104,7 +104,7 @@ class _UiMyDrillState extends State<UiMyDrill> {
                             child: const Text('Watch Detail'),
                             onPressed: () {
                               if (mounted) {
-                                Navigator.pushReplacementNamed(
+                                Navigator.pushNamed(
                                   context,
                                   group,
                                   arguments: {
@@ -139,7 +139,7 @@ class _UiMyDrillState extends State<UiMyDrill> {
                   TextButton(
                     onPressed: () {
                       if (mounted) {
-                        Navigator.pushReplacementNamed(context, createGroup);
+                        Navigator.pushNamed(context, createGroup);
                       }
                     },
                     child: const Text("Create My Group"),
