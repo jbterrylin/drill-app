@@ -121,6 +121,13 @@ class _UiCreateEventState extends State<UiCreateEvent> {
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: const Text("Create Event"),
+        leading: BackButton(
+          onPressed: () {
+            if (mounted) {
+              Navigator.pop(context);
+            }
+          },
+        ),
       ),
       body: SingleChildScrollView(
         child: RefreshIndicator(
