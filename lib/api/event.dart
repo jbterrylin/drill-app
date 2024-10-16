@@ -11,48 +11,51 @@ class EventApi {
 
   final log = Logger('EventApi');
   Future<OnlyId?> createEvent(CreateEventReq input) async {
+    Map<String, dynamic> data = {};
     try {
-      final data = await httpService.post('/v1/event/create', input.toJson());
+      data = await httpService.post('/v1/event/create', input.toJson());
       return OnlyId.fromJson(data);
     } catch (e) {
       log.severe('createEvent ', e);
-      snackBarApiError("server error");
+      snackBarApiError(data["msg"] ?? "server error");
     }
     return null;
   }
 
   Future<GetEventListResp?> getEventList(GetEventListReq input) async {
+    Map<String, dynamic> data = {};
     try {
-      final data = await httpService.post('/v1/event/list', input.toJson());
+      data = await httpService.post('/v1/event/list', input.toJson());
       return GetEventListResp.fromJson(data);
     } catch (e) {
       log.severe('getEventList ', e);
-      snackBarApiError("server error");
+      snackBarApiError(data["msg"] ?? "server error");
     }
     return null;
   }
 
   Future<GetEventUserListResp?> getEventUserList(
       GetEventUserListReq input) async {
+    Map<String, dynamic> data = {};
     try {
-      final data =
-          await httpService.post('/v1/event_user/list', input.toJson());
+      data = await httpService.post('/v1/event_user/list', input.toJson());
       return GetEventUserListResp.fromJson(data);
     } catch (e) {
       log.severe('getEventUserList ', e);
-      snackBarApiError("server error");
+      snackBarApiError(data["msg"] ?? "server error");
     }
     return null;
   }
 
   Future<Base?> updateEventUserStatus(UpdateEventUserStatusReq input) async {
+    Map<String, dynamic> data = {};
     try {
-      final data = await httpService.post(
+      data = await httpService.post(
           '/v1/event_user/update/status', input.toJson());
       return Base.fromJson(data);
     } catch (e) {
       log.severe('updateEventUserStatus ', e);
-      snackBarApiError("server error");
+      snackBarApiError(data["msg"] ?? "server error");
     }
     return null;
   }

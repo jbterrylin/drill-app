@@ -11,46 +11,49 @@ class UserApi {
 
   final log = Logger('UserApi');
   Future<CreateUserResp?> createUser(CreateUserReq input) async {
+    Map<String, dynamic> data = {};
     try {
-      final data = await httpService.post('/v1/user/create', input.toJson());
+      data = await httpService.post('/v1/user/create', input.toJson());
       return CreateUserResp.fromJson(data);
     } catch (e) {
       log.severe('createUser ', e);
-      snackBarApiError("server error");
+      snackBarApiError(data["msg"] ?? "server error");
     }
     return null;
   }
 
   Future<LoginResp?> userLogin(LoginReq input) async {
+    Map<String, dynamic> data = {};
     try {
-      final data = await httpService.post('/v1/user/login', input.toJson());
+      data = await httpService.post('/v1/user/login', input.toJson());
       return LoginResp.fromJson(data);
     } catch (e) {
       log.severe('userLogin ', e);
-      snackBarApiError("server error");
+      snackBarApiError(data["msg"] ?? "server error");
     }
     return null;
   }
 
   Future<Base?> userLogout() async {
+    Map<String, dynamic> data = {};
     try {
-      final data =
-          await httpService.post('/v1/user/logout', <String, dynamic>{});
+      data = await httpService.post('/v1/user/logout', <String, dynamic>{});
       return Base.fromJson(data);
     } catch (e) {
       log.severe('userLogout ', e);
-      snackBarApiError("server error");
+      snackBarApiError(data["msg"] ?? "server error");
     }
     return null;
   }
 
   Future<UserResp?> getMe() async {
+    Map<String, dynamic> data = {};
     try {
-      final data = await httpService.post('/v1/user/me', <String, dynamic>{});
+      data = await httpService.post('/v1/user/me', <String, dynamic>{});
       return UserResp.fromJson(data);
     } catch (e) {
       log.severe('getMe ', e);
-      snackBarApiError("server error");
+      snackBarApiError(data["msg"] ?? "server error");
     }
     return null;
   }
