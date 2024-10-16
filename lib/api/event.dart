@@ -14,6 +14,9 @@ class EventApi {
     Map<String, dynamic> data = {};
     try {
       data = await httpService.post('/v1/event/create', input.toJson());
+      if (data["msg"] != null && data["msg"] != "") {
+        snackBarApiError(data["msg"] ?? "error");
+      }
       return OnlyId.fromJson(data);
     } catch (e) {
       log.severe('createEvent ', e);
@@ -26,6 +29,9 @@ class EventApi {
     Map<String, dynamic> data = {};
     try {
       data = await httpService.post('/v1/event/list', input.toJson());
+      if (data["msg"] != null && data["msg"] != "") {
+        snackBarApiError(data["msg"] ?? "error");
+      }
       return GetEventListResp.fromJson(data);
     } catch (e) {
       log.severe('getEventList ', e);
@@ -39,6 +45,9 @@ class EventApi {
     Map<String, dynamic> data = {};
     try {
       data = await httpService.post('/v1/event_user/list', input.toJson());
+      if (data["msg"] != null && data["msg"] != "") {
+        snackBarApiError(data["msg"] ?? "error");
+      }
       return GetEventUserListResp.fromJson(data);
     } catch (e) {
       log.severe('getEventUserList ', e);
@@ -52,6 +61,9 @@ class EventApi {
     try {
       data = await httpService.post(
           '/v1/event_user/update/status', input.toJson());
+      if (data["msg"] != null && data["msg"] != "") {
+        snackBarApiError(data["msg"] ?? "error");
+      }
       return Base.fromJson(data);
     } catch (e) {
       log.severe('updateEventUserStatus ', e);

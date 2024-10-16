@@ -14,6 +14,9 @@ class UserApi {
     Map<String, dynamic> data = {};
     try {
       data = await httpService.post('/v1/user/create', input.toJson());
+      if (data["msg"] != null && data["msg"] != "") {
+        snackBarApiError(data["msg"] ?? "error");
+      }
       return CreateUserResp.fromJson(data);
     } catch (e) {
       log.severe('createUser ', e);
@@ -26,6 +29,9 @@ class UserApi {
     Map<String, dynamic> data = {};
     try {
       data = await httpService.post('/v1/user/login', input.toJson());
+      if (data["msg"] != null && data["msg"] != "") {
+        snackBarApiError(data["msg"] ?? "error");
+      }
       return LoginResp.fromJson(data);
     } catch (e) {
       log.severe('userLogin ', e);
@@ -38,6 +44,9 @@ class UserApi {
     Map<String, dynamic> data = {};
     try {
       data = await httpService.post('/v1/user/logout', <String, dynamic>{});
+      if (data["msg"] != null && data["msg"] != "") {
+        snackBarApiError(data["msg"] ?? "error");
+      }
       return Base.fromJson(data);
     } catch (e) {
       log.severe('userLogout ', e);
@@ -50,6 +59,9 @@ class UserApi {
     Map<String, dynamic> data = {};
     try {
       data = await httpService.post('/v1/user/me', <String, dynamic>{});
+      if (data["msg"] != null && data["msg"] != "") {
+        snackBarApiError(data["msg"] ?? "error");
+      }
       return UserResp.fromJson(data);
     } catch (e) {
       log.severe('getMe ', e);
