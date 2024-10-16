@@ -1,3 +1,4 @@
+import 'package:drill_app/util/snack_bar/api_error.dart';
 import 'package:logging/logging.dart';
 
 import '../model/event.dart';
@@ -9,13 +10,13 @@ class EventApi {
   EventApi({required this.httpService});
 
   final log = Logger('EventApi');
-
   Future<OnlyId?> createEvent(CreateEventReq input) async {
     try {
       final data = await httpService.post('/v1/event/create', input.toJson());
       return OnlyId.fromJson(data);
     } catch (e) {
       log.severe('createEvent ', e);
+      snackBarApiError("server error");
     }
     return null;
   }
@@ -26,6 +27,7 @@ class EventApi {
       return GetEventListResp.fromJson(data);
     } catch (e) {
       log.severe('getEventList ', e);
+      snackBarApiError("server error");
     }
     return null;
   }
@@ -38,6 +40,7 @@ class EventApi {
       return GetEventUserListResp.fromJson(data);
     } catch (e) {
       log.severe('getEventUserList ', e);
+      snackBarApiError("server error");
     }
     return null;
   }
@@ -49,6 +52,7 @@ class EventApi {
       return Base.fromJson(data);
     } catch (e) {
       log.severe('updateEventUserStatus ', e);
+      snackBarApiError("server error");
     }
     return null;
   }

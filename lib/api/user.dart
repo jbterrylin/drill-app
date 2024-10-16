@@ -1,3 +1,4 @@
+import 'package:drill_app/util/snack_bar/api_error.dart';
 import 'package:logging/logging.dart';
 
 import '../model/user.dart';
@@ -15,6 +16,7 @@ class UserApi {
       return CreateUserResp.fromJson(data);
     } catch (e) {
       log.severe('createUser ', e);
+      snackBarApiError("server error");
     }
     return null;
   }
@@ -25,6 +27,7 @@ class UserApi {
       return LoginResp.fromJson(data);
     } catch (e) {
       log.severe('userLogin ', e);
+      snackBarApiError("server error");
     }
     return null;
   }
@@ -36,6 +39,7 @@ class UserApi {
       return Base.fromJson(data);
     } catch (e) {
       log.severe('userLogout ', e);
+      snackBarApiError("server error");
     }
     return null;
   }
@@ -46,6 +50,7 @@ class UserApi {
       return UserResp.fromJson(data);
     } catch (e) {
       log.severe('getMe ', e);
+      snackBarApiError("server error");
     }
     return null;
   }

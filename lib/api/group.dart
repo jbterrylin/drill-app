@@ -1,3 +1,4 @@
+import 'package:drill_app/util/snack_bar/api_error.dart';
 import 'package:logging/logging.dart';
 
 import '../model/group.dart';
@@ -15,6 +16,7 @@ class GroupApi {
       return OnlyId.fromJson(data);
     } catch (e) {
       log.severe('createGroup ', e);
+      snackBarApiError("server error");
     }
     return null;
   }
@@ -25,6 +27,7 @@ class GroupApi {
       return GetGroupListResp.fromJson(data);
     } catch (e) {
       log.severe('getGroupList ', e);
+      snackBarApiError("server error");
     }
     return null;
   }
@@ -36,6 +39,7 @@ class GroupApi {
       return OnlyId.fromJson(data);
     } catch (e) {
       log.severe('createGroupInvite ', e);
+      snackBarApiError("server error");
     }
     return null;
   }
@@ -48,6 +52,7 @@ class GroupApi {
       return GetGroupInviteListResp.fromJson(data);
     } catch (e) {
       log.severe('getGroupInviteList ', e);
+      snackBarApiError("server error");
     }
     return null;
   }
@@ -60,6 +65,7 @@ class GroupApi {
       return Base.fromJson(data);
     } catch (e) {
       log.severe('updateGroupInviteStatus ', e);
+      snackBarApiError("server error");
     }
     return null;
   }
@@ -72,6 +78,7 @@ class GroupApi {
       return GetGroupUserListResp.fromJson(data);
     } catch (e) {
       log.severe('getGroupUserList ', e);
+      snackBarApiError("server error");
     }
     return null;
   }
