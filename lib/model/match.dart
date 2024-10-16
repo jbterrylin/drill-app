@@ -1,6 +1,11 @@
+enum BaseField {
+  code,
+  msg,
+}
+
 class Base {
-  final int code;
-  final String msg;
+  int code;
+  String msg;
 
   Base({
     required this.code,
@@ -24,12 +29,20 @@ class Base {
   }
 }
 
+enum BaseListReqField {
+  noPagination,
+  page,
+  pageSize,
+  orderBy,
+  sort,
+}
+
 class BaseListReq {
-  final bool? noPagination;
-  final int? page;
-  final int? pageSize;
-  final List<String>? orderBy;
-  final List<String>? sort;
+  bool? noPagination;
+  int? page;
+  int? pageSize;
+  List<String>? orderBy;
+  List<String>? sort;
 
   BaseListReq({
     this.noPagination,
@@ -62,8 +75,12 @@ class BaseListReq {
   }
 }
 
+enum CreateGameReqField {
+  matchId,
+}
+
 class CreateGameReq {
-  final int? matchId;
+  int? matchId;
 
   CreateGameReq({
     this.matchId,
@@ -84,12 +101,20 @@ class CreateGameReq {
   }
 }
 
+enum CreateMatchReqField {
+  eventId,
+  drillTypeConfigId,
+  startAt,
+  endAt,
+  teams,
+}
+
 class CreateMatchReq {
-  final int? eventId;
-  final int? drillTypeConfigId;
-  final String? startAt;
-  final String? endAt;
-  final List<CreateMatchReqTeam>? teams;
+  int? eventId;
+  int? drillTypeConfigId;
+  String? startAt;
+  String? endAt;
+  List<CreateMatchReqTeam>? teams;
 
   CreateMatchReq({
     this.eventId,
@@ -106,7 +131,11 @@ class CreateMatchReq {
       drillTypeConfigId: json['drill_type_config_id'],
       startAt: json['start_at'],
       endAt: json['end_at'],
-      teams: json['teams'],
+      teams: json['teams'] != null
+          ? (json['teams'] as List)
+              .map((v) => CreateMatchReqTeam.fromJson(v))
+              .toList()
+          : null,
     );
   }
 
@@ -117,14 +146,19 @@ class CreateMatchReq {
       'drill_type_config_id': drillTypeConfigId,
       'start_at': startAt,
       'end_at': endAt,
-      'teams': teams,
+      'teams': teams?.map((v) => v.toJson()),
     };
   }
 }
 
+enum CreateMatchReqTeamField {
+  sortOrder,
+  teamUsers,
+}
+
 class CreateMatchReqTeam {
-  final int? sortOrder;
-  final List<CreateMatchReqTeamUser>? teamUsers;
+  int? sortOrder;
+  List<CreateMatchReqTeamUser>? teamUsers;
 
   CreateMatchReqTeam({
     this.sortOrder,
@@ -135,7 +169,11 @@ class CreateMatchReqTeam {
   factory CreateMatchReqTeam.fromJson(Map<String, dynamic> json) {
     return CreateMatchReqTeam(
       sortOrder: json['sort_order'],
-      teamUsers: json['team_users'],
+      teamUsers: json['team_users'] != null
+          ? (json['team_users'] as List)
+              .map((v) => CreateMatchReqTeamUser.fromJson(v))
+              .toList()
+          : null,
     );
   }
 
@@ -143,14 +181,19 @@ class CreateMatchReqTeam {
   Map<String, dynamic> toJson() {
     return {
       'sort_order': sortOrder,
-      'team_users': teamUsers,
+      'team_users': teamUsers?.map((v) => v.toJson()),
     };
   }
 }
 
+enum CreateMatchReqTeamUserField {
+  userId,
+  sortOrder,
+}
+
 class CreateMatchReqTeamUser {
-  final int? userId;
-  final int? sortOrder;
+  int? userId;
+  int? sortOrder;
 
   CreateMatchReqTeamUser({
     this.userId,
@@ -174,13 +217,22 @@ class CreateMatchReqTeamUser {
   }
 }
 
+enum DrillTypeField {
+  id,
+  createdAt,
+  updatedAt,
+  name,
+  transId,
+  drillTypeConfigs,
+}
+
 class DrillType {
-  final int? id;
-  final String? createdAt;
-  final String? updatedAt;
-  final String? name;
-  final String? transId;
-  final List<DrillTypeConfig>? drillTypeConfigs;
+  int? id;
+  String? createdAt;
+  String? updatedAt;
+  String? name;
+  String? transId;
+  List<DrillTypeConfig>? drillTypeConfigs;
 
   DrillType({
     this.id,
@@ -199,7 +251,11 @@ class DrillType {
       updatedAt: json['updated_at'],
       name: json['name'],
       transId: json['trans_id'],
-      drillTypeConfigs: json['drill_type_configs'],
+      drillTypeConfigs: json['drill_type_configs'] != null
+          ? (json['drill_type_configs'] as List)
+              .map((v) => DrillTypeConfig.fromJson(v))
+              .toList()
+          : null,
     );
   }
 
@@ -211,21 +267,33 @@ class DrillType {
       'updated_at': updatedAt,
       'name': name,
       'trans_id': transId,
-      'drill_type_configs': drillTypeConfigs,
+      'drill_type_configs': drillTypeConfigs?.map((v) => v.toJson()),
     };
   }
 }
 
+enum DrillTypeConfigField {
+  id,
+  createdAt,
+  updatedAt,
+  drillTypeId,
+  teamCount,
+  teamUserCount,
+  winGameCount,
+  winScoreCount,
+  drillType,
+}
+
 class DrillTypeConfig {
-  final int? id;
-  final String? createdAt;
-  final String? updatedAt;
-  final int? drillTypeId;
-  final int? teamCount;
-  final int? teamUserCount;
-  final int? winGameCount;
-  final int? winScoreCount;
-  final DrillType? drillType;
+  int? id;
+  String? createdAt;
+  String? updatedAt;
+  int? drillTypeId;
+  int? teamCount;
+  int? teamUserCount;
+  int? winGameCount;
+  int? winScoreCount;
+  DrillType? drillType;
 
   DrillTypeConfig({
     this.id,
@@ -250,7 +318,9 @@ class DrillTypeConfig {
       teamUserCount: json['team_user_count'],
       winGameCount: json['win_game_count'],
       winScoreCount: json['win_score_count'],
-      drillType: json['drill_type'],
+      drillType: json['drill_type'] != null
+          ? DrillType?.fromJson(json['drill_type'])
+          : null,
     );
   }
 
@@ -265,20 +335,31 @@ class DrillTypeConfig {
       'team_user_count': teamUserCount,
       'win_game_count': winGameCount,
       'win_score_count': winScoreCount,
-      'drill_type': drillType,
+      'drill_type': drillType?.toJson(),
     };
   }
 }
 
+enum GameField {
+  id,
+  createdAt,
+  updatedAt,
+  matchId,
+  sortOrder,
+  transId,
+  match,
+  gameTeamResults,
+}
+
 class Game {
-  final int? id;
-  final String? createdAt;
-  final String? updatedAt;
-  final int? matchId;
-  final int? sortOrder;
-  final String? transId;
-  final Match? match;
-  final List<GameTeamResult>? gameTeamResults;
+  int? id;
+  String? createdAt;
+  String? updatedAt;
+  int? matchId;
+  int? sortOrder;
+  String? transId;
+  Match? match;
+  List<GameTeamResult>? gameTeamResults;
 
   Game({
     this.id,
@@ -300,8 +381,12 @@ class Game {
       matchId: json['match_id'],
       sortOrder: json['sort_order'],
       transId: json['trans_id'],
-      match: json['match'],
-      gameTeamResults: json['game_team_results'],
+      match: json['match'] != null ? Match?.fromJson(json['match']) : null,
+      gameTeamResults: json['game_team_results'] != null
+          ? (json['game_team_results'] as List)
+              .map((v) => GameTeamResult.fromJson(v))
+              .toList()
+          : null,
     );
   }
 
@@ -314,22 +399,34 @@ class Game {
       'match_id': matchId,
       'sort_order': sortOrder,
       'trans_id': transId,
-      'match': match,
-      'game_team_results': gameTeamResults,
+      'match': match?.toJson(),
+      'game_team_results': gameTeamResults?.map((v) => v.toJson()),
     };
   }
 }
 
+enum GameTeamResultField {
+  id,
+  createdAt,
+  updatedAt,
+  gameId,
+  teamId,
+  score,
+  transId,
+  result,
+  game,
+}
+
 class GameTeamResult {
-  final int? id;
-  final String? createdAt;
-  final String? updatedAt;
-  final int? gameId;
-  final int? teamId;
-  final int? score;
-  final String? transId;
-  final int? result;
-  final Game? game;
+  int? id;
+  String? createdAt;
+  String? updatedAt;
+  int? gameId;
+  int? teamId;
+  int? score;
+  String? transId;
+  int? result;
+  Game? game;
 
   GameTeamResult({
     this.id,
@@ -354,7 +451,7 @@ class GameTeamResult {
       score: json['score'],
       transId: json['trans_id'],
       result: json['result'],
-      game: json['game'],
+      game: json['game'] != null ? Game?.fromJson(json['game']) : null,
     );
   }
 
@@ -369,10 +466,13 @@ class GameTeamResult {
       'score': score,
       'trans_id': transId,
       'result': result,
-      'game': game,
+      'game': game?.toJson(),
     };
   }
 }
+
+// enum GetDrillTypeListReqField {
+// }
 
 class GetDrillTypeListReq {
   GetDrillTypeListReq();
@@ -388,9 +488,14 @@ class GetDrillTypeListReq {
   }
 }
 
+enum GetDrillTypeListRespDataField {
+  data,
+  total,
+}
+
 class GetDrillTypeListRespData {
-  final List<DrillType> data;
-  final int total;
+  List<DrillType> data;
+  int total;
 
   GetDrillTypeListRespData({
     required this.data,
@@ -400,7 +505,9 @@ class GetDrillTypeListRespData {
   // 从 JSON 构造 GetDrillTypeListRespData 对象
   factory GetDrillTypeListRespData.fromJson(Map<String, dynamic> json) {
     return GetDrillTypeListRespData(
-      data: json['data'],
+      data: json['data'] != null
+          ? (json['data'] as List).map((v) => DrillType.fromJson(v)).toList()
+          : [],
       total: json['total'],
     );
   }
@@ -408,15 +515,20 @@ class GetDrillTypeListRespData {
   // 将 GetDrillTypeListRespData 对象转换为 JSON
   Map<String, dynamic> toJson() {
     return {
-      'data': data,
+      'data': data.map((v) => v.toJson()),
       'total': total,
     };
   }
 }
 
+enum GetDrillTypeListRespField {
+  base,
+  data,
+}
+
 class GetDrillTypeListResp {
-  final Base? base;
-  final GetDrillTypeListRespData data;
+  Base? base;
+  GetDrillTypeListRespData data;
 
   GetDrillTypeListResp({
     this.base,
@@ -440,9 +552,14 @@ class GetDrillTypeListResp {
   }
 }
 
+enum GetMatchListReqField {
+  baseListReq,
+  eventId,
+}
+
 class GetMatchListReq {
-  final BaseListReq? baseListReq;
-  final int? eventId;
+  BaseListReq? baseListReq;
+  int? eventId;
 
   GetMatchListReq({
     this.baseListReq,
@@ -466,9 +583,14 @@ class GetMatchListReq {
   }
 }
 
+enum GetMatchListRespDataField {
+  data,
+  total,
+}
+
 class GetMatchListRespData {
-  final List<Match> data;
-  final int total;
+  List<Match> data;
+  int total;
 
   GetMatchListRespData({
     required this.data,
@@ -478,7 +600,9 @@ class GetMatchListRespData {
   // 从 JSON 构造 GetMatchListRespData 对象
   factory GetMatchListRespData.fromJson(Map<String, dynamic> json) {
     return GetMatchListRespData(
-      data: json['data'],
+      data: json['data'] != null
+          ? (json['data'] as List).map((v) => Match.fromJson(v)).toList()
+          : [],
       total: json['total'],
     );
   }
@@ -486,15 +610,20 @@ class GetMatchListRespData {
   // 将 GetMatchListRespData 对象转换为 JSON
   Map<String, dynamic> toJson() {
     return {
-      'data': data,
+      'data': data.map((v) => v.toJson()),
       'total': total,
     };
   }
 }
 
+enum GetMatchListRespField {
+  base,
+  data,
+}
+
 class GetMatchListResp {
-  final Base? base;
-  final GetMatchListRespData data;
+  Base? base;
+  GetMatchListRespData data;
 
   GetMatchListResp({
     this.base,
@@ -518,19 +647,34 @@ class GetMatchListResp {
   }
 }
 
+enum MatchField {
+  id,
+  createdAt,
+  updatedAt,
+  eventId,
+  drillTypeConfigId,
+  startAt,
+  endAt,
+  transId,
+  drillTypeConfig,
+  games,
+  teams,
+  matchTeamResults,
+}
+
 class Match {
-  final int? id;
-  final String? createdAt;
-  final String? updatedAt;
-  final int? eventId;
-  final int? drillTypeConfigId;
-  final String? startAt;
-  final String? endAt;
-  final String? transId;
-  final DrillTypeConfig? drillTypeConfig;
-  final List<Game>? games;
-  final List<Team>? teams;
-  final List<MatchTeamResult>? matchTeamResults;
+  int? id;
+  String? createdAt;
+  String? updatedAt;
+  int? eventId;
+  int? drillTypeConfigId;
+  String? startAt;
+  String? endAt;
+  String? transId;
+  DrillTypeConfig? drillTypeConfig;
+  List<Game>? games;
+  List<Team>? teams;
+  List<MatchTeamResult>? matchTeamResults;
 
   Match({
     this.id,
@@ -558,10 +702,20 @@ class Match {
       startAt: json['start_at'],
       endAt: json['end_at'],
       transId: json['trans_id'],
-      drillTypeConfig: json['drill_type_config'],
-      games: json['games'],
-      teams: json['teams'],
-      matchTeamResults: json['match_team_results'],
+      drillTypeConfig: json['drill_type_config'] != null
+          ? DrillTypeConfig?.fromJson(json['drill_type_config'])
+          : null,
+      games: json['games'] != null
+          ? (json['games'] as List).map((v) => Game.fromJson(v)).toList()
+          : null,
+      teams: json['teams'] != null
+          ? (json['teams'] as List).map((v) => Team.fromJson(v)).toList()
+          : null,
+      matchTeamResults: json['match_team_results'] != null
+          ? (json['match_team_results'] as List)
+              .map((v) => MatchTeamResult.fromJson(v))
+              .toList()
+          : null,
     );
   }
 
@@ -576,24 +730,36 @@ class Match {
       'start_at': startAt,
       'end_at': endAt,
       'trans_id': transId,
-      'drill_type_config': drillTypeConfig,
-      'games': games,
-      'teams': teams,
-      'match_team_results': matchTeamResults,
+      'drill_type_config': drillTypeConfig?.toJson(),
+      'games': games?.map((v) => v.toJson()),
+      'teams': teams?.map((v) => v.toJson()),
+      'match_team_results': matchTeamResults?.map((v) => v.toJson()),
     };
   }
 }
 
+enum MatchTeamResultField {
+  id,
+  createdAt,
+  updatedAt,
+  matchId,
+  teamId,
+  transId,
+  result,
+  match,
+  team,
+}
+
 class MatchTeamResult {
-  final int? id;
-  final String? createdAt;
-  final String? updatedAt;
-  final int? matchId;
-  final int? teamId;
-  final String? transId;
-  final int? result;
-  final Match? match;
-  final Team? team;
+  int? id;
+  String? createdAt;
+  String? updatedAt;
+  int? matchId;
+  int? teamId;
+  String? transId;
+  int? result;
+  Match? match;
+  Team? team;
 
   MatchTeamResult({
     this.id,
@@ -617,8 +783,8 @@ class MatchTeamResult {
       teamId: json['team_id'],
       transId: json['trans_id'],
       result: json['result'],
-      match: json['match'],
-      team: json['team'],
+      match: json['match'] != null ? Match?.fromJson(json['match']) : null,
+      team: json['team'] != null ? Team?.fromJson(json['team']) : null,
     );
   }
 
@@ -632,15 +798,20 @@ class MatchTeamResult {
       'team_id': teamId,
       'trans_id': transId,
       'result': result,
-      'match': match,
-      'team': team,
+      'match': match?.toJson(),
+      'team': team?.toJson(),
     };
   }
 }
 
+enum OnlyIdField {
+  base,
+  id,
+}
+
 class OnlyId {
-  final Base? base;
-  final int id;
+  Base? base;
+  int id;
 
   OnlyId({
     this.base,
@@ -664,16 +835,28 @@ class OnlyId {
   }
 }
 
+enum TeamField {
+  id,
+  createdAt,
+  updatedAt,
+  matchId,
+  sortOrder,
+  transId,
+  result,
+  teamUsers,
+  gameTeamResults,
+}
+
 class Team {
-  final int? id;
-  final String? createdAt;
-  final String? updatedAt;
-  final int? matchId;
-  final int? sortOrder;
-  final String? transId;
-  final int? result;
-  final List<TeamUser>? teamUsers;
-  final List<GameTeamResult>? gameTeamResults;
+  int? id;
+  String? createdAt;
+  String? updatedAt;
+  int? matchId;
+  int? sortOrder;
+  String? transId;
+  int? result;
+  List<TeamUser>? teamUsers;
+  List<GameTeamResult>? gameTeamResults;
 
   Team({
     this.id,
@@ -697,8 +880,16 @@ class Team {
       sortOrder: json['sort_order'],
       transId: json['trans_id'],
       result: json['result'],
-      teamUsers: json['team_users'],
-      gameTeamResults: json['game_team_results'],
+      teamUsers: json['team_users'] != null
+          ? (json['team_users'] as List)
+              .map((v) => TeamUser.fromJson(v))
+              .toList()
+          : null,
+      gameTeamResults: json['game_team_results'] != null
+          ? (json['game_team_results'] as List)
+              .map((v) => GameTeamResult.fromJson(v))
+              .toList()
+          : null,
     );
   }
 
@@ -712,21 +903,32 @@ class Team {
       'sort_order': sortOrder,
       'trans_id': transId,
       'result': result,
-      'team_users': teamUsers,
-      'game_team_results': gameTeamResults,
+      'team_users': teamUsers?.map((v) => v.toJson()),
+      'game_team_results': gameTeamResults?.map((v) => v.toJson()),
     };
   }
 }
 
+enum TeamInviteField {
+  id,
+  createdAt,
+  updatedAt,
+  teamId,
+  userId,
+  status,
+  transId,
+  teams,
+}
+
 class TeamInvite {
-  final int? id;
-  final String? createdAt;
-  final String? updatedAt;
-  final int? teamId;
-  final int? userId;
-  final int? status;
-  final String? transId;
-  final List<Team>? teams;
+  int? id;
+  String? createdAt;
+  String? updatedAt;
+  int? teamId;
+  int? userId;
+  int? status;
+  String? transId;
+  List<Team>? teams;
 
   TeamInvite({
     this.id,
@@ -749,7 +951,9 @@ class TeamInvite {
       userId: json['user_id'],
       status: json['status'],
       transId: json['trans_id'],
-      teams: json['teams'],
+      teams: json['teams'] != null
+          ? (json['teams'] as List).map((v) => Team.fromJson(v)).toList()
+          : null,
     );
   }
 
@@ -763,20 +967,31 @@ class TeamInvite {
       'user_id': userId,
       'status': status,
       'trans_id': transId,
-      'teams': teams,
+      'teams': teams?.map((v) => v.toJson()),
     };
   }
 }
 
+enum TeamUserField {
+  id,
+  createdAt,
+  updatedAt,
+  teamId,
+  userId,
+  sortOrder,
+  transId,
+  user,
+}
+
 class TeamUser {
-  final int? id;
-  final String? createdAt;
-  final String? updatedAt;
-  final int? teamId;
-  final int? userId;
-  final int? sortOrder;
-  final String? transId;
-  final User? user;
+  int? id;
+  String? createdAt;
+  String? updatedAt;
+  int? teamId;
+  int? userId;
+  int? sortOrder;
+  String? transId;
+  User? user;
 
   TeamUser({
     this.id,
@@ -799,7 +1014,7 @@ class TeamUser {
       userId: json['user_id'],
       sortOrder: json['sort_order'],
       transId: json['trans_id'],
-      user: json['user'],
+      user: json['user'] != null ? User?.fromJson(json['user']) : null,
     );
   }
 
@@ -813,16 +1028,23 @@ class TeamUser {
       'user_id': userId,
       'sort_order': sortOrder,
       'trans_id': transId,
-      'user': user,
+      'user': user?.toJson(),
     };
   }
 }
 
+enum UpdateGameTeamResultScoreReqField {
+  gameId,
+  teamId,
+  score,
+  type,
+}
+
 class UpdateGameTeamResultScoreReq {
-  final int? gameId;
-  final int? teamId;
-  final int? score;
-  final int? type;
+  int? gameId;
+  int? teamId;
+  int? score;
+  int? type;
 
   UpdateGameTeamResultScoreReq({
     this.gameId,
@@ -852,10 +1074,16 @@ class UpdateGameTeamResultScoreReq {
   }
 }
 
+enum UpdateTeamInviteStatusReqField {
+  teamId,
+  userId,
+  status,
+}
+
 class UpdateTeamInviteStatusReq {
-  final int? teamId;
-  final int? userId;
-  final int? status;
+  int? teamId;
+  int? userId;
+  int? status;
 
   UpdateTeamInviteStatusReq({
     this.teamId,
@@ -882,13 +1110,22 @@ class UpdateTeamInviteStatusReq {
   }
 }
 
+enum UserField {
+  id,
+  createdAt,
+  updatedAt,
+  username,
+  password,
+  transId,
+}
+
 class User {
-  final int? id;
-  final String? createdAt;
-  final String? updatedAt;
-  final String? username;
-  final String? password;
-  final String? transId;
+  int? id;
+  String? createdAt;
+  String? updatedAt;
+  String? username;
+  String? password;
+  String? transId;
 
   User({
     this.id,
