@@ -60,6 +60,7 @@ class _UiLoginState extends State<UiLogin> {
                 _updateLoginReq(value, LoginReqField.username),
           ),
         ),
+        const SizedBox(height: 10),
         SizedBox(
           width: 250,
           child: TextField(
@@ -80,26 +81,39 @@ class _UiLoginState extends State<UiLogin> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: const Text("Login"),
-      ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            // 添加 logo.png 图片
+            Image.asset(
+              'assets/images/logo.png', // 确保你的 logo 图片路径正确
+              width: 150, // 设置图片宽度
+              height: 150, // 设置图片高度
+            ),
+            const SizedBox(height: 20), // 添加一个空白区分 logo 和表单
+            // 这里是登录表单
             loginForm(),
+            const SizedBox(height: 20), // 添加一个空白区分表单和按钮
+            // 登录按钮
             TextButton(
               onPressed: () {
                 _userLoginFunc();
               },
-              child: const Text("Login"),
+              child: const Text(
+                "Login",
+                style: TextStyle(fontSize: 18), // 设置按钮文字大小
+              ),
             ),
+            // 注册按钮
             TextButton(
               onPressed: () {
                 Navigator.pushReplacementNamed(context, register);
               },
-              child: const Text("Sign up"),
+              child: const Text(
+                "Sign up",
+                style: TextStyle(fontSize: 18), // 设置按钮文字大小
+              ),
             ),
           ],
         ),
