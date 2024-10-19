@@ -1,6 +1,6 @@
 import 'package:drill_app/bootstrap/bootstrap.dart';
 import 'package:drill_app/config/route.dart';
-import 'package:drill_app/config/theme.dart';
+import 'package:drill_app/config/theme/theme.dart';
 import 'package:drill_app/constant/constant.dart';
 import 'package:drill_app/view/landing.dart';
 import 'package:flutter/material.dart';
