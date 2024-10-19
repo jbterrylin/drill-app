@@ -95,6 +95,12 @@ class _UiRegisterState extends State<UiRegister> {
               },
               child: const Text("Register"),
             ),
+            TextButton(
+              onPressed: () {
+                Navigator.pushReplacementNamed(context, login);
+              },
+              child: const Text("Back To Login"),
+            ),
           ],
         ),
       ),
