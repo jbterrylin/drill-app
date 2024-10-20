@@ -82,17 +82,24 @@ class _UiHomeState extends State<UiHome> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-        child: RefreshIndicator(
+    return Scaffold(
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: RefreshIndicator(
             onRefresh: () async {
               await init();
             },
             child: Center(
-                child: Column(
-              children: <Widget>[
-                const Text("Group near you"),
-                _groupCards(),
-              ],
-            ))));
+              child: Column(
+                children: <Widget>[
+                  const Text("Group near you"),
+                  _groupCards(),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }
