@@ -1,4 +1,5 @@
 import 'package:drill_app/api/api.dart';
+import 'package:drill_app/component/custom_card.dart';
 import 'package:drill_app/constant/design.dart';
 import 'package:drill_app/constant/router.dart';
 import 'package:drill_app/model/group.dart';
@@ -85,22 +86,12 @@ class _UiMyDrillState extends State<UiMyDrill> {
     return getGroupListResp?.data.data ?? [];
   }
 
-  Widget _groupCards(List<Group> groups,String title) {
+  Widget _groupCards(List<Group> groups) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const SizedBox(height: defaultPadding / 2),
-        Padding(
-          padding: const EdgeInsets.all(defaultPadding),
-          child: Text(
-            title,
-            style: Theme.of(context).textTheme.titleSmall,
-          ),
-        ),
-        // While loading use 👇
-        // const ProductsSkelton(),
         SizedBox(
-          height: 220,
+          height: 157,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
             itemCount: groups.length,
@@ -109,43 +100,24 @@ class _UiMyDrillState extends State<UiMyDrill> {
                 left: defaultPadding,
                 right: index == groups.length - 1 ? defaultPadding : 0,
               ),
-              child: SizedBox(
-                width: 300, // Set your desired width
-                child: Card(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[
-                      ListTile(
-                        leading: const Icon(Icons.album),
-                        title: Text(groups[index].name ?? ""),
-                        subtitle: Text(groups[index].ownerId?.toString() ?? ""),
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: <Widget>[
-                          TextButton(
-                            child: const Text('Watch Detail'),
-                            onPressed: () {
-                              if (mounted) {
-                                Navigator.pushNamed(
-                                  context,
-                                  group,
-                                  arguments: {
-                                    uiGroupInitFieldGroupId: groups[index].id,
-                                  },
-                                );
-                              }
-                            },
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
+              child: CustomCard(
+                press: () {
+                  if (mounted) {
+                    Navigator.pushNamed(
+                      context,
+                      group,
+                      arguments: {
+                        uiGroupInitFieldGroupId: groups[index].id,
+                      },
+                    );
+                  }
+                },
+                image: "https://i.imgur.com/CGCyp1d.png",
+                title: groups[index].name ?? "",
               ),
             ),
           ),
-        )
+        ),
       ],
     );
   }
@@ -162,16 +134,56 @@ class _UiMyDrillState extends State<UiMyDrill> {
             child: Center(
               child: Column(
                 children: <Widget>[
-                  TextButton(
-                    onPressed: () {
-                      if (mounted) {
-                        Navigator.pushNamed(context, createGroup);
-                      }
-                    },
-                    child: const Text("Create My Group"),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          const SizedBox(
+                              height: defaultPadding / 2,
+                              width: defaultPadding / 4),
+                          Padding(
+                            padding: const EdgeInsets.all(defaultPadding),
+                            child: Text(
+                              "My Group",
+                              style: Theme.of(context).textTheme.titleSmall,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          TextButton(
+                            onPressed: () {
+                              if (mounted) {
+                                Navigator.pushNamed(context, createGroup);
+                              }
+                            },
+                            child: const Text("+ New Group"),
+                          ),
+                          const SizedBox(
+                              height: defaultPadding / 2,
+                              width: defaultPadding),
+                        ],
+                      ),
+                    ],
                   ),
-                  _groupCards(_myGroups, "My Group"),
-                  _groupCards(_joinedGroups,"Joined Group"),
+                  _groupCards(_myGroups),
+                  Row(
+                    children: [
+                      const SizedBox(
+                          height: defaultPadding / 2,
+                          width: defaultPadding / 4),
+                      Padding(
+                        padding: const EdgeInsets.all(defaultPadding),
+                        child: Text(
+                          "Joined Group",
+                          style: Theme.of(context).textTheme.titleSmall,
+                        ),
+                      ),
+                    ],
+                  ),
+                  _groupCards(_joinedGroups),
                 ],
               ),
             ),
