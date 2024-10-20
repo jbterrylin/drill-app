@@ -1,4 +1,5 @@
 import 'package:drill_app/api/api.dart';
+import 'package:drill_app/constant/design.dart';
 import 'package:drill_app/constant/router.dart';
 import 'package:drill_app/model/group.dart';
 import 'package:drill_app/state/me.dart';
@@ -84,18 +85,40 @@ class _UiMyDrillState extends State<UiMyDrill> {
     return getGroupListResp?.data.data ?? [];
   }
 
-  Widget _groupCards(List<Group> groups) {
+  Widget _groupCards(List<Group> groups,String title) {
     return Column(
-      children: groups
-          .map((v) => {
-                Card(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const SizedBox(height: defaultPadding / 2),
+        Padding(
+          padding: const EdgeInsets.all(defaultPadding),
+          child: Text(
+            title,
+            style: Theme.of(context).textTheme.titleSmall,
+          ),
+        ),
+        // While loading use 👇
+        // const ProductsSkelton(),
+        SizedBox(
+          height: 220,
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount: groups.length,
+            itemBuilder: (context, index) => Padding(
+              padding: EdgeInsets.only(
+                left: defaultPadding,
+                right: index == groups.length - 1 ? defaultPadding : 0,
+              ),
+              child: SizedBox(
+                width: 300, // Set your desired width
+                child: Card(
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
                       ListTile(
                         leading: const Icon(Icons.album),
-                        title: Text(v.name ?? ""),
-                        subtitle: Text(v.ownerId?.toString() ?? ""),
+                        title: Text(groups[index].name ?? ""),
+                        subtitle: Text(groups[index].ownerId?.toString() ?? ""),
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
@@ -108,7 +131,7 @@ class _UiMyDrillState extends State<UiMyDrill> {
                                   context,
                                   group,
                                   arguments: {
-                                    uiGroupInitFieldGroupId: v.id,
+                                    uiGroupInitFieldGroupId: groups[index].id,
                                   },
                                 );
                               }
@@ -118,24 +141,27 @@ class _UiMyDrillState extends State<UiMyDrill> {
                       ),
                     ],
                   ),
-                )
-              })
-          .expand((v) => v)
-          .toList(),
+                ),
+              ),
+            ),
+          ),
+        )
+      ],
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-        child: RefreshIndicator(
+    return Scaffold(
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: RefreshIndicator(
             onRefresh: () async {
               await init();
             },
             child: Center(
               child: Column(
                 children: <Widget>[
-                  const Text("My Group"),
                   TextButton(
                     onPressed: () {
                       if (mounted) {
@@ -144,11 +170,14 @@ class _UiMyDrillState extends State<UiMyDrill> {
                     },
                     child: const Text("Create My Group"),
                   ),
-                  _groupCards(_myGroups),
-                  const Text("Joined Group"),
-                  _groupCards(_joinedGroups),
+                  _groupCards(_myGroups, "My Group"),
+                  _groupCards(_joinedGroups,"Joined Group"),
                 ],
               ),
-            )));
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }
